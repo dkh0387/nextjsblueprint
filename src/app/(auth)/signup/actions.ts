@@ -1,3 +1,7 @@
+/**
+ * Server actions for sign-up.
+ * Actually a pardon to a normal POST request, so we still need to validate data.
+ */
 "use server"
 
 import {generateIdFromEntropySize} from "lucia";

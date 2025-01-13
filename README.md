@@ -57,7 +57,8 @@ This is the starting code for this tutorial.
 # Deployment platform
 
 - Use vercel (https://vercel.com/) as a platform for set up the database as well as deployment the app
-- Especially for the postgres db we use Neon: https://console.neon.tech/app/projects/royal-math-04615317?database=neondb
+- Especially for the postgres db, we use
+  Neon: https://console.neon.tech/app/projects/royal-math-04615317?database=neondb
 
 # ORM
 
@@ -66,8 +67,16 @@ This is the starting code for this tutorial.
 - Enable full text search explicitly: add `previewFeatures = ["fullTextSearch"]` to `schema.prisma`
 - Prisma client config: `src/lib/prisma.ts` (
   see https://www.prisma.io/docs/orm/more/help-and-troubleshooting/nextjs-help for non singleton issues)
+- All migration scripts are in `schema.prisma`
+- We run `npx prisma db push` to execute a migration
 
 # Authentication
 
 - We use Lucia: https://lucia-auth.com/
-- ...
+- After creating users and sessions in the database (see `schema.prisma`) we need `/src/auth.ts` file, containing the
+  whole authentication logic
+- Validation:
+    - schemas are placed in `lib/validation.ts` (attributes like email are valid after log-in, etc.)
+    - Validation library: https://zod.dev/
+- We do need to add `serverExternalPackages: ["@node-rs/argon2"]` in `next.config.mjs` for Lucia to work
+

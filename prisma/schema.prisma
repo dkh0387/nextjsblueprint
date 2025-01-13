@@ -16,3 +16,28 @@ datasource db {
   // uncomment next line if you use Prisma <5.10
   // directUrl = env("DATABASE_URL_UNPOOLED")
 }
+
+model User {
+  id           String    @id
+  username     String    @unique
+  displayName  String
+  email        String?   @unique
+  passwordHash String?
+  googleId     String?   @unique
+  avatarUrl    String?
+  bio          String?
+  sessions     Session[] // a user can have multiple sessions, if logged-in in different devices
+  createdAt    DateTime  @default(now())
+
+  @@map("users") // renaming the table in the db
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  expiresAt DateTime
+
+  user User @relation(references: [id], fields: [userId], onDelete: Cascade)
+
+  @@map("sessions")
+}

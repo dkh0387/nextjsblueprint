@@ -86,4 +86,4 @@ This is the starting code for this tutorial.
 - Directory naming: `(auth)\signup`: router ignores the `(auth)` part for the url
 - Backend in NexJS: we use server actions (functions, which generate requests for CRUD, etc.), see
   `(auth)/signup/actions.ts` as example
-- 
+- Creating a page: if we create a `page.tsx` file under `(auth)/signup` it will create a view under url `/signup`

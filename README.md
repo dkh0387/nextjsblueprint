@@ -86,4 +86,10 @@ This is the starting code for this tutorial.
 - Directory naming: `(auth)\signup`: router ignores the `(auth)` part for the url
 - Backend in NexJS: we use server actions (functions, which generate requests for CRUD, etc.), see
   `(auth)/signup/actions.ts` as example
-- Creating a page: if we create a `page.tsx` file under `(auth)/signup` it will create a view under url `/signup`
+- Creating a page:
+    - If we create a `page.tsx` file under `(auth)/signup` it will create a view under url `/signup`
+    - Everything in `page.tsx` is rendered serversides, we try to pre render as much as possible; so page files are
+      ***server components***
+    - Since server components are all static, we need to inject JS components into it to make it interactive. We can do
+      so by injecting ***client components***
+    - Client components are rendered clientsides and need their own files

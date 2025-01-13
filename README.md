@@ -80,3 +80,8 @@ This is the starting code for this tutorial.
     - Validation library: https://zod.dev/
 - We do need to add `serverExternalPackages: ["@node-rs/argon2"]` in `next.config.mjs` for Lucia to work
 
+# Project structure
+
+- Separate the app in two parts: ath part and main part, since auth part does not need a frame
+- Directory naming: `(auth)\signup`: router ignores the `(auth)` part for the url
+- Backend in NexJS: we use server actions (functions, which generate requests for CRUD, etc.)

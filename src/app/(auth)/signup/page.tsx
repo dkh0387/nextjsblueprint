@@ -2,9 +2,11 @@ import { Metadata } from "next";
 import Image from "next/image";
 import signupImage from "@/assets/signup-image.jpg";
 import Link from "next/link";
+import SignUpForm from "@/app/(auth)/signup/SignUpForm";
 
 /**
  * Server rendering page for sign-up.
+ * Sign-up form is a custom component SignUpForm.tsx.
  */
 export const metadata: Metadata = {
   title: "Sign up",
@@ -22,7 +24,7 @@ export default function Page() {
             </p>
           </div>
           <div className="space-y-5">
-            sign up form
+            <SignUpForm />
             <Link href="/login" className="block text-center hover:underline">
               Already have an account? Log in
             </Link>

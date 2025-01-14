@@ -93,3 +93,11 @@ This is the starting code for this tutorial.
     - Since server components are all static, we need to inject JS components into it to make it interactive. We can do
       so by injecting ***client components***
     - Client components are rendered clientsides and need their own files
+
+# Component referencing
+
+- We can use our own components inside the others
+- We just need to create `.tsx` files for an euch component
+- If we need to provide references from a parent component into an internal element of a child component we do need to
+  use `React.forwardRef`
+- Example for that: `PasswordInput` child component inside the `SignUpForm`

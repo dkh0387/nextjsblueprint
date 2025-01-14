@@ -19,10 +19,16 @@ import React, { useState, useTransition } from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { signUp } from "@/app/(auth)/signup/actions";
+import { PasswordInput } from "@/components/PasswordInput";
 
 export default function SignUpForm() {
   const [error, setError] = useState<string>();
 
+  /**
+   * We have to wrap server actions into a transition.
+   * The problem: we could have errors from backend, like already existing username, etc.
+   * If we do not wrap it, it looks like pending for the user.
+   */
   const [isPending, startTransition] = useTransition();
 
   /**
@@ -40,6 +46,10 @@ export default function SignUpForm() {
     },
   });
 
+  /**
+   * Handling the errors occurs on the backend by wrapping the call into startTransition.
+   * @param values
+   */
   async function onSubmit(values: SingUpValues) {
     setError(undefined);
     startTransition(async () => {
@@ -52,6 +62,7 @@ export default function SignUpForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+        {error && <p className="text-center text-destructive">{error}</p>}
         <FormField
           control={form.control}
           name="username"
@@ -85,11 +96,15 @@ export default function SignUpForm() {
             <FormItem>
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input
+                {/*                <Input
                   placeholder="Password"
                   type="password"
                   {...field}
-                ></Input>
+                ></Input>*/}
+                <PasswordInput
+                  placeholder="Password"
+                  {...field}
+                ></PasswordInput>
               </FormControl>
               <FormMessage></FormMessage>
             </FormItem>

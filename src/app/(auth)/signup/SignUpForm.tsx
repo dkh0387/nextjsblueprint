@@ -25,6 +25,9 @@ export default function SignUpForm() {
 
   const [isPending, startTransition] = useTransition();
 
+  /**
+   * Form model based on sign-up values.
+   */
   const form = useForm<SingUpValues>({
     // we inject our sign-up schema into the resolver, it will automatically apply all the validation rules
     resolver: zodResolver(signUpSchema),

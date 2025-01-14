@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { signUp } from "@/app/(auth)/signup/actions";
 import { PasswordInput } from "@/components/PasswordInput";
+import LoadingButton from "@/components/LoadingButton";
 
 export default function SignUpForm() {
   const [error, setError] = useState<string>();
@@ -110,9 +111,15 @@ export default function SignUpForm() {
             </FormItem>
           )}
         />
-        <Button type="submit" className="w-full">
+        {/*For loading, we could use form.formState.isSubmitting,
+        but it does not take the redirect into account, so we need to use isPending from transition.*/}
+        <LoadingButton
+          loading={isPending}
+          type="submit"
+          className="w-full"
+        >
           Create account
-        </Button>
+        </LoadingButton>
       </form>
     </Form>
   );

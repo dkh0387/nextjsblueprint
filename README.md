@@ -44,6 +44,8 @@ This is the starting code for this tutorial.
     ```
 
 - Wrapping the whole layout of the app: use `src/app/layout.tsx` file to set title, etc.
+- If we want a specific layout only applied to a specific group, we put an according `layout.tsx` into the group folder
+  with brackets (like `(auth)`)
 - Pages caching clientsides (for 30 sec): adit `next.config.mjs`:
 
     ```
@@ -69,6 +71,7 @@ This is the starting code for this tutorial.
   see https://www.prisma.io/docs/orm/more/help-and-troubleshooting/nextjs-help for non singleton issues)
 - All migration scripts are in `schema.prisma`
 - We run `npx prisma db push` to execute a migration
+- Inspecting a database: run `npx prisma studio` to open up a local hosted database manager
 
 # Authentication
 
@@ -101,3 +104,9 @@ This is the starting code for this tutorial.
 - If we need to provide references from a parent component into an internal element of a child component we do need to
   use `React.forwardRef`
 - Example for that: `PasswordInput` child component inside the `SignUpForm`
+- Providing content to client components on session example:
+    - Problem: if we validate session, we trigger database traffic
+    - This happens only clientsides, so if frontend components make calls
+    - To avoid this, we can use a common `main/layout.tsx` file, where we fetch session once and provide it to all child
+      clients
+    - To do so we need a session provider (see `SessionProvider.tsx`)

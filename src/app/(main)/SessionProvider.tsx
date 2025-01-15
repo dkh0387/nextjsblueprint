@@ -1,8 +1,7 @@
 "use client";
 
 import { Session, User } from "lucia";
-import { createContext } from "node:vm";
-import React from "react";
+import React, { createContext } from "react";
 
 /**
  * Context provider for session.
@@ -16,8 +15,18 @@ interface SessionContext {
 
 const SessionContext = createContext<SessionContext | null>(null);
 
+/**
+ * We do pass the session fetched over [Layout] as value to all the child clients below.
+ *
+ * @param children
+ * @param value
+ * @constructor
+ */
 export default function SessionProvider({
   children,
-}: {
-  children: React.ReactNode;
-}) {}
+  value,
+}: React.PropsWithChildren<{ value: SessionContext }>) {
+  return (
+    <SessionContext.Provider value={value}>{children}</SessionContext.Provider>
+  );
+}

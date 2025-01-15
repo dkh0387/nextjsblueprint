@@ -1,6 +1,7 @@
 import React from "react";
 import { validateRequest } from "@/auth";
 import { redirect } from "next/navigation";
+import SessionProvider from "@/app/(main)/SessionProvider";
 
 /**
  * Proof whether there is an active session, so a logged-in user.
@@ -16,7 +17,9 @@ import { redirect } from "next/navigation";
 export default async function Layout(children: React.ReactNode) {
   const session = await validateRequest();
 
+  // if the session is undefined, we redirect to log in,
+  // so we may allow session to be not nullable within the session provider
   if (!session.user) redirect("/login");
 
-  return <>{children}</>;
+  return <SessionProvider value={session}>{children}</SessionProvider>;
 }

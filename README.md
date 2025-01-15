@@ -104,9 +104,15 @@ This is the starting code for this tutorial.
 - If we need to provide references from a parent component into an internal element of a child component we do need to
   use `React.forwardRef`
 - Example for that: `PasswordInput` child component inside the `SignUpForm`
+
+# Context provider
+
 - Providing content to client components on session example:
     - Problem: if we validate session, we trigger database traffic
     - This happens only clientsides, so if frontend components make calls
     - To avoid this, we can use a common `main/layout.tsx` file, where we fetch session once and provide it to all child
       clients
     - To do so we need a session provider (see `SessionProvider.tsx`)
+    - A context provider is a client component, which provides a value context to the children
+    - It can be called in a according `(main)/layout.tsx` file, which makes sure it is being applied to all client
+      components defined within `(main)` directory

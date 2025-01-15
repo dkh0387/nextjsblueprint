@@ -1,7 +1,7 @@
 import React from "react";
 import { validateRequest } from "@/auth";
 import { redirect } from "next/navigation";
-import SessionProvider from "@/app/(main)/SessionProvider";
+import SessionProvider from "./SessionProvider";
 
 /**
  * Proof whether there is an active session, so a logged-in user.
@@ -14,7 +14,11 @@ import SessionProvider from "@/app/(main)/SessionProvider";
  * @param children
  * @constructor
  */
-export default async function Layout(children: React.ReactNode) {
+export default async function Layout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const session = await validateRequest();
 
   // if the session is undefined, we redirect to log in,

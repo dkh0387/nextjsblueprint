@@ -43,9 +43,6 @@ This is the starting code for this tutorial.
     }
     ```
 
-- Wrapping the whole layout of the app: use `src/app/layout.tsx` file to set title, etc.
-- If we want a specific layout only applied to a specific group, we put an according `layout.tsx` into the group folder
-  with brackets (like `(auth)`)
 - Pages caching clientsides (for 30 sec): adit `next.config.mjs`:
 
     ```
@@ -85,7 +82,23 @@ This is the starting code for this tutorial.
 
 # Project structure
 
-- Separate the app in two parts: ath part and main part, since auth part does not need a frame
+- Separate the app in two parts: ath part and main part, since the auth part does not need a frame
+- Wrapping the whole layout of the app: use `src/app/layout.tsx` file to set title, etc.
+- Purpose of `(...)` directories:
+    - Any page inside those directories have an url without directory name itself
+    - If we want a specific layout only applied to a specific group, we put an according `layout.tsx` into the group
+      folder like `(auth)`
+    - NOTE: if we do render multiple child components (like login and signup within `(auth)/layout.tsx`) we need to use
+      an array notation in the method signature:
+
+      ```
+      export default async function Layout({
+      children,
+      }: {
+      children: React.ReactNode;
+      })
+      ```
+
 - Directory naming: `(auth)\signup`: router ignores the `(auth)` part for the url
 - Backend in NexJS: we use server actions (functions, which generate requests for CRUD, etc.), see
   `(auth)/signup/actions.ts` as example
@@ -101,7 +114,7 @@ This is the starting code for this tutorial.
 
 - We can use our own components inside the others
 - We just need to create `.tsx` files for an euch component
-- If we need to provide references from a parent component into an internal element of a child component we do need to
+- If we need to provide references from a parent component into an internal element of a child component, we do need to
   use `React.forwardRef`
 - Example for that: `PasswordInput` child component inside the `SignUpForm`
 
@@ -110,7 +123,8 @@ This is the starting code for this tutorial.
 - Providing content to client components on session example:
     - Problem: if we validate session, we trigger database traffic
     - This happens only clientsides, so if frontend components make calls
-    - To avoid this, we can use a common `main/layout.tsx` file, where we fetch session once and provide it to all child
+    - To avoid this, we can use a common `(main)/layout.tsx` file, where we fetch session once and provide it to all
+      child
       clients
     - To do so we need a session provider (see `SessionProvider.tsx`)
     - A context provider is a client component, which provides a value context to the children

@@ -9,7 +9,11 @@ import { redirect } from "next/navigation";
  * @param children
  * @constructor
  */
-export default async function Layout(children: React.ReactNode) {
+export default async function Layout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const { user } = await validateRequest();
 
   if (user) redirect("/");

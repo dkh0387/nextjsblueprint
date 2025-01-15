@@ -114,5 +114,7 @@ This is the starting code for this tutorial.
       clients
     - To do so we need a session provider (see `SessionProvider.tsx`)
     - A context provider is a client component, which provides a value context to the children
-    - It can be called in a according `(main)/layout.tsx` file, which makes sure it is being applied to all client
-      components defined within `(main)` directory
+    - It can be called in an according `(main)/layout.tsx` file, which makes sure it is being applied to all client
+      components defined within `(main)` directory (those are all pages except login and signup)
+    - NOTE: event if a context provider is a client component, children of it could be server components!
+    - So only the context is produced clientsides, providing overall possible!

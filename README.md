@@ -27,6 +27,7 @@ This is the starting code for this tutorial.
     - After installation Shadcn creates `components.json` as a config file, adds CSS to `global.css` and makes changes
       on`tailwind.config.ts`
     - We can either copy themes from https://ui.shadcn.com/themes or use own themes
+    - By using a custom theme, we just customize the shadcn template and paste the code into `src/app/globals.css`
     - Code for all installed components can be found here: `src/components/ui` and modified any time
 - Enable `prettier-plugin-tailwindcss`: create a new config file `prettier.config.js` in the root directory:
 
@@ -132,3 +133,8 @@ This is the starting code for this tutorial.
       components defined within `(main)` directory (those are all pages except login and signup)
     - NOTE: event if a context provider is a client component, children of it could be server components!
     - So only the context is produced clientsides, providing overall possible!
+
+# CSS
+
+- ***NOTE:*** all CSS stuff is coming from Tailwind CSS classes
+- Some explanation on CSS classes in `Navbar.tsx`

@@ -138,3 +138,25 @@ This is the starting code for this tutorial.
 
 - ***NOTE:*** all CSS stuff is coming from Tailwind CSS classes
 - Some explanation on CSS classes in `Navbar.tsx`
+
+# React component
+
+- Example with explanation: `components/UserButton.tsx`
+- Client or server components, rendering depends
+- Visibility: could live with `(...)` directories and only available there
+- Typical structure:
+
+    ```
+     "use client";
+ 
+     interface UserButtonProps {
+     className?: string;
+     }
+    
+     export default function UserButton({ className }: UserButtonProps) {}
+    
+    ```
+- `export default`: means that the function is automatically imported if the component is
+- `function UserButton()`: this is the component, can be used as HTML tag
+- `({ className }: UserButtonProps)`: props provided to the component; by using as HTML tag we define those pros along
+  the tag like CSS style

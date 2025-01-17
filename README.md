@@ -160,3 +160,11 @@ This is the starting code for this tutorial.
 - `function UserButton()`: this is the component, can be used as HTML tag
 - `({ className }: UserButtonProps)`: props provided to the component; by using as HTML tag we define those pros along
   the tag like CSS style
+
+# Progressive enhancement
+
+- Problem: some elements like search bar should work quickly in the browser, but sometimes JS is disabled
+- For those cases, the browser will create a request with params from the HTML element
+- This url is wrong if we do not define it explicitly and points to the wrong result
+- So we need to configure explicitly: `<form onSubmit={handleSubmit} method="GET" action="/search">`
+- See `components/SearchField.tsx` for an example

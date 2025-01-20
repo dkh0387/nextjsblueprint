@@ -23,5 +23,3 @@ export type LogInValues = z.infer<typeof logInSchema>;
 export const postSchema = z.object({
   content: requiredString,
 });
-
-export type PostValue = z.infer<typeof postSchema>;

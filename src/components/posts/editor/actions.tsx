@@ -1,16 +1,18 @@
 "use server";
 
 import { validateRequest } from "@/auth";
-import { postSchema, PostValue } from "@/lib/validation";
+import { postSchema } from "@/lib/validation";
 import { prisma } from "@/lib/prisma";
 
-export async function submitPost(input: PostValue) {
+export async function submitPost(input: string) {
   // look up if the user is authorized
   const { user } = await validateRequest();
 
   if (!user) throw Error("Unauthorized");
 
-  const { content } = postSchema.parse(input);
+  const { content } = postSchema.parse({ content: input });
+
+  console.log(content);
 
   await prisma.post.create({
     data: {

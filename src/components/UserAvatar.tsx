@@ -1,18 +1,17 @@
 import avatarPlaceholder from "@/assets/avatar-placeholder.png";
-import { className } from "postcss-selector-parser";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 
 interface UserAvatarProps {
   avatarUrl: string | null | undefined;
   size?: number;
-  classname?: string;
+  className?: string;
 }
 
 export default function UserAvatar({
   avatarUrl,
   size,
-  classname,
+  className,
 }: UserAvatarProps) {
   return (
     <Image

@@ -110,6 +110,11 @@ This is the starting code for this tutorial.
     - Since server components are all static, we need to inject JS components into it to make it interactive. We can do
       so by injecting ***client components***
     - Client components are rendered clientsides and need their own files
+- In general, within a route we have
+    - `page.tsx`: main serverside rendered content
+    - `layout.tsx`: a frame for the content, everything here is applied to all the components within the route
+    - `<components>.tsx`: components itself, rendered clientside
+    - `actions.ts`: backend services
 
 # Component referencing
 

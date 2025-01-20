@@ -76,10 +76,13 @@ This is the starting code for this tutorial.
 - We use Lucia: https://lucia-auth.com/
 - After creating users and sessions in the database (see `schema.prisma`) we need `/src/auth.ts` file, containing the
   whole authentication logic
-- Validation:
-    - schemas are placed in `lib/validation.ts` (attributes like email are valid after log-in, etc.)
-    - Validation library: https://zod.dev/
 - We do need to add `serverExternalPackages: ["@node-rs/argon2"]` in `next.config.mjs` for Lucia to work
+
+# Validation
+
+- schemas are placed in `lib/validation.ts` (attributes like email are valid after log-in, etc.)
+- Validation library: https://zod.dev/
+- 
 
 # Project structure
 

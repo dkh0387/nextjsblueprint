@@ -46,6 +46,7 @@ export default function PostEditor() {
           className="max-h-[20rem] w-full overflow-y-auto rounded-2xl bg-background px-5 py-3"
         />
       </div>
+      {/*justify-end: button placed at the end*/}
       <div className="flex justify-end">
         <Button
           onClick={onSubmit}

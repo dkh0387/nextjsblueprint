@@ -60,7 +60,7 @@ This is the starting code for this tutorial.
 - Especially for the postgres db, we use
   Neon: https://console.neon.tech/app/projects/royal-math-04615317?database=neondb
 
-# ORM
+# ORM (Prisma)
 
 - We use prisma: https://www.prisma.io/
 - Run `npx prisma init` to create `schema.prisma` and edit `.env` files
@@ -70,6 +70,8 @@ This is the starting code for this tutorial.
 - All migration scripts are in `schema.prisma`
 - We run `npx prisma db push` to execute a migration
 - Inspecting a database: run `npx prisma studio` to open up a local hosted database manager
+- Example of fetching data: `post/editor/PostEditor.tsx`
+- Defining types of fetched objects including joined objects: `lib/types.ts`
 
 # Authentication
 
@@ -82,7 +84,7 @@ This is the starting code for this tutorial.
 
 - schemas are placed in `lib/validation.ts` (attributes like email are valid after log-in, etc.)
 - Validation library: https://zod.dev/
-- 
+-
 
 # Project structure
 
@@ -118,6 +120,7 @@ This is the starting code for this tutorial.
     - `layout.tsx`: a frame for the content, everything here is applied to all the components within the route
     - `<components>.tsx`: components itself, rendered clientside
     - `actions.ts`: backend services
+    - `lib/....ts`: lib files
 
 # Component referencing
 

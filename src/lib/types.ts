@@ -1,5 +1,11 @@
-import {Prisma} from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
+export const userDataSelect = {
+  id: true,
+  username: true,
+  displayName: true,
+  avatarUrl: true,
+} satisfies Prisma.UserSelect;
 /**
  * Example of extracting a joined object:
  * we do have a user associated to posts.
@@ -10,11 +16,7 @@ import {Prisma} from "@prisma/client";
  */
 export const postDataInclude = {
   user: {
-    select: {
-      username: true,
-      displayName: true,
-      avatarUrl: true,
-    },
+    select: userDataSelect,
   },
 } satisfies Prisma.PostInclude;
 

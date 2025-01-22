@@ -72,6 +72,7 @@ This is the starting code for this tutorial.
 - Inspecting a database: run `npx prisma studio` to open up a local hosted database manager
 - Example of fetching data: `post/editor/PostEditor.tsx`
 - Defining types of fetched objects including joined objects: `lib/types.ts`
+- Example of using native SQL: `components/TrendSideBar.tsx`
 
 # Authentication
 
@@ -179,3 +180,25 @@ This is the starting code for this tutorial.
 - This url is wrong if we do not define it explicitly and points to the wrong result
 - So we need to configure explicitly: `<form onSubmit={handleSubmit} method="GET" action="/search">`
 - See `components/SearchField.tsx` for an example
+
+# Suspense indicator
+
+- Components with db access: they have to be server components.
+  We need a component in component pattern, where there is an async component where db fetching happens.
+  Example: `components/TrendsSideBar.tsx`
+- We need to provide a loading indicator while data is fetching:
+
+```
+      <Suspense fallback={<Loading />}>
+        <WhoToFollow></WhoToFollow>
+      </Suspense>
+```
+
+- NOTE: `<Suspense></Suspense>` only works for child components, so we need to extract an extra component where fetching
+  happens!
+
+# Caching
+
+- `cache()`: function to cache clientside data for sharing between components. Example: `src/auth.ts`
+- `unstable_cache()`: function to cache serverside data to avoid multiple db requests by page reloading. Example:
+  `components/TrendSideBar.tsx`

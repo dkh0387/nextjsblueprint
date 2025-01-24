@@ -212,4 +212,9 @@ This is the starting code for this tutorial.
 - Completely responsible for server states, runs on the server side
 - Idea: we create serverside endpoints springlike and make requests to them using ReactQuery
 - Example for such endpoints: `src/app/api/posts/for-you/route.ts`
-- 
+- Example of fetching and caching data from endpoint: `src/app/(main)/ForYouFeed.tsx`
+- Structure:
+    - `ReactQueryPrivider.tsx`: client component as a context provider for ReactQuery. We wrap the whole context inside,
+      see `src/app/layout.tsx`
+    - `route.ts`: endpoints for fetching data from server
+    - `...tsx`: client components where data are fetched and cached

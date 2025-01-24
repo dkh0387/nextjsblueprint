@@ -202,3 +202,14 @@ This is the starting code for this tutorial.
 - `cache()`: function to cache clientside data for sharing between components. Example: `src/auth.ts`
 - `unstable_cache()`: function to cache serverside data to avoid multiple db requests by page reloading. Example:
   `components/TrendSideBar.tsx`
+
+# React Query
+
+- See `tanstack.com`
+- Goal: Fetching and managing data from server
+- Data caching, avoiding raise conditions, infinite loading, optimistic updates, etc.
+- Similar to state libs like redux
+- Completely responsible for server states, runs on the server side
+- Idea: we create serverside endpoints springlike and make requests to them using ReactQuery
+- Example for such endpoints: `src/app/api/posts/for-you/route.ts`
+- 

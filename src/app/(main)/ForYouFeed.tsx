@@ -4,6 +4,7 @@ import {PostData} from "@/lib/types";
 import {useQuery} from "@tanstack/react-query";
 import {Loader2} from "lucide-react";
 import Post from "@/components/posts/Post";
+import kyInstance from "@/lib/ky";
 
 /**
  * Example of fetching data from an endpoint.
@@ -14,14 +15,19 @@ import Post from "@/components/posts/Post";
 export default function ForYouFeed() {
   const query = useQuery<PostData[]>({
     queryKey: ["post-feed", "for-you"],
-    queryFn: async () => {
+    /*The way to fetch data from endpoint without Ky*/
+/*    queryFn: async () => {
       const res = await fetch("api/posts/for-you");
 
       if (!res.ok) {
         throw Error(`Request failed with status code ${res.status}`);
       }
       return res.json();
-    },
+    },*/
+    /*The way to fetch data from endpoint with Ky
+    * Errorhandling is provided by Ky as well
+    * */
+    queryFn: kyInstance.get("api/posts/for-you").json<PostData[]>,
   });
 
   if (query.status === "pending") {

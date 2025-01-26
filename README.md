@@ -218,3 +218,5 @@ This is the starting code for this tutorial.
       see `src/app/layout.tsx`
     - `route.ts`: endpoints for fetching data from server
     - `...tsx`: client components where data are fetched and cached
+- Using Ky: https://github.com/sindresorhus/ky/tree/4a427011ad7b4ab98bb5f02ecaa5375fba5addca
+- Example of using Ky converting strings into Date: `lib/ky.ts`

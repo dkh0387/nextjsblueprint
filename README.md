@@ -220,6 +220,8 @@ This is the starting code for this tutorial.
     - `...tsx`: client components where data are fetched and cached
 - Using Ky: https://github.com/sindresorhus/ky/tree/4a427011ad7b4ab98bb5f02ecaa5375fba5addca
 - Example of using Ky converting strings into Date: `lib/ky.ts`
+- Problem: after submitting a new post, we want to show it without reloading the page
+- Solution: mutation, see example `src/components/posts/editor/mutations.ts`:
 
 # Infinite Loading
 

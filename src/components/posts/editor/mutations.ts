@@ -2,11 +2,11 @@ import {useToast} from "@/components/ui/use-toast";
 import {PostsPage} from "@/lib/types";
 import {InfiniteData, QueryFilters, useMutation, useQueryClient,} from "@tanstack/react-query";
 import {submitPost} from "./actions";
-import {Prisma} from "@prisma/client";
 
 /**
  * ReactQuery posts mutation on submitting.
  * We want the page to reload automatically after a new post was submitted.
+ * The idea is not to destroy and reload the whole cache, but to add the submitted post to the existing cache on top.
  * Toast allows showing a message in the bottom right corner (like notifications).
  */
 export function useSubmitPostMutation() {
@@ -47,6 +47,10 @@ export function useSubmitPostMutation() {
         },
       );
 
+      /**
+       * invalidate all queries where data is null.
+       * In case we canceled queries BEFORE the first page is loaded.
+       */
       await queryClient.invalidateQueries({
         queryKey: queryFilter.queryKey,
         predicate(query) {

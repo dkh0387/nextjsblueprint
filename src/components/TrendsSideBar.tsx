@@ -34,7 +34,7 @@ export default function TrendsSideBar() {
 }
 
 async function WhoToFollow() {
-  const { user } = await validateRequest();
+    const { user } = await validateRequest();
 
   if (!user) return null;
 

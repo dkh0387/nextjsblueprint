@@ -10,6 +10,13 @@ import {submitPost} from "./actions";
  * Toast allows showing a message in the bottom right corner (like notifications).
  */
 export function useSubmitPostMutation() {
+  let promise = new Promise(function (resolve, reject) {
+    // eine Funktion, die dauert, bis Sie fertig ist
+    setTimeout(function () {
+      resolve("Versprochenes Ergebnis");
+    }, 2000);
+  });
+
   const { toast } = useToast();
 
   const queryClient = useQueryClient();
@@ -49,7 +56,7 @@ export function useSubmitPostMutation() {
 
       /**
        * invalidate all queries where data is null.
-       * In case we canceled queries BEFORE the first page is loaded.
+       * In case a new post is submitted before the first page is loaded (very rare).
        */
       await queryClient.invalidateQueries({
         queryKey: queryFilter.queryKey,

@@ -223,6 +223,8 @@ This is the starting code for this tutorial.
 - Mutation:
     - Problem: after submitting a new post, we want to show it without reloading the page
     - Solution: mutation, see example `src/components/posts/editor/mutations.ts`
+    - Example for argument binding between mutation function and mutation call:
+      `src/components/posts/DeletePostDialog.tsx`
 
 # Infinite Loading
 
@@ -232,6 +234,10 @@ This is the starting code for this tutorial.
 - It takes care of autoloading by scrolling the page
 - Usage: `src/app/(main)/ForYouFeed.tsx`
 
-# Set a loading delay:
+# Set a loading delay
 
 - Just for test purpose: `await new Promise(r => setTimeout(r, 2000));`
+
+# Confirmation dialog
+
+- Example: `src/components/posts/DeletePostDialog.tsx`

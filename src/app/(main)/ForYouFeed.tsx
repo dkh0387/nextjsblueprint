@@ -26,13 +26,13 @@ export default function ForYouFeed() {
     queryKey: ["post-feed", "for-you"],
     /*The way to fetch data from endpoint without Ky*/
     /*    queryFn: async () => {
-                                              const res = await fetch("api/posts/for-you");
-                                    
-                                              if (!res.ok) {
-                                                throw Error(`Request failed with status code ${res.status}`);
-                                              }
-                                              return res.json();
-                                                                              },*/
+                                                  const res = await fetch("api/posts/for-you");
+                                        
+                                                  if (!res.ok) {
+                                                    throw Error(`Request failed with status code ${res.status}`);
+                                                  }
+                                                  return res.json();
+                                                                                  },*/
     queryFn: ({ pageParam }) =>
       kyInstance
         .get(
@@ -76,6 +76,11 @@ export default function ForYouFeed() {
         <Post key={post.id} post={post} />
       ))}
       {isFetching && <Loader2 className="mx-auto my-3 animate-spin" />}
+{/*      <DeletePostDialog
+        open
+        onClose={() => {}}
+        post={posts[0]}
+      ></DeletePostDialog>*/}
     </InfiniteScrollContainer>
   );
 }

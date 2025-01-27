@@ -220,3 +220,11 @@ This is the starting code for this tutorial.
     - `...tsx`: client components where data are fetched and cached
 - Using Ky: https://github.com/sindresorhus/ky/tree/4a427011ad7b4ab98bb5f02ecaa5375fba5addca
 - Example of using Ky converting strings into Date: `lib/ky.ts`
+
+# Infinite Loading
+
+- We want to automatically load data by scrolling the page
+- For that we create an auto scrolling container: `components/InfiniteScrollContainer.tsx` (it is generic since children
+  are any data you pass in)
+- It takes care of autoloading by scrolling the page
+- Usage: `src/app/(main)/ForYouFeed.tsx`

@@ -6,6 +6,7 @@ import {Loader2} from "lucide-react";
 import Post from "@/components/posts/Post";
 import kyInstance from "@/lib/ky";
 import InfiniteScrollContainer from "@/components/InfiniteScrollContainer";
+import PostsLoadingSkeleton from "@/components/posts/PostsLoadingSkeleton";
 
 /**
  * Example of fetching data from an endpoint.
@@ -25,13 +26,13 @@ export default function ForYouFeed() {
     queryKey: ["post-feed", "for-you"],
     /*The way to fetch data from endpoint without Ky*/
     /*    queryFn: async () => {
-                              const res = await fetch("api/posts/for-you");
-                    
-                              if (!res.ok) {
-                                throw Error(`Request failed with status code ${res.status}`);
-                              }
-                              return res.json();
-                                                              },*/
+                                              const res = await fetch("api/posts/for-you");
+                                    
+                                              if (!res.ok) {
+                                                throw Error(`Request failed with status code ${res.status}`);
+                                              }
+                                              return res.json();
+                                                                              },*/
     queryFn: ({ pageParam }) =>
       kyInstance
         .get(
@@ -46,8 +47,18 @@ export default function ForYouFeed() {
   const posts: PostData[] = data?.pages.flatMap((page) => page.posts) || [];
 
   if (status === "pending") {
-    return <Loader2 className="mx-auto animate-spin" />;
+    return <PostsLoadingSkeleton />;
   }
+
+  // if you do not have any posts yet
+  if (status === "success" && !posts.length && !hasNextPage) {
+    return (
+      <p className="text-center text-muted-foreground">
+        There are no posts yet.
+      </p>
+    );
+  }
+
   if (status === "error") {
     return (
       <p className="text-center text-destructive">

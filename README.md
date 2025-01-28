@@ -125,7 +125,7 @@ This is the starting code for this tutorial.
 # Routing
 
 - Directory naming:
-    - `(auth)\signup`: router ignores the `(auth)` part for the url
+    - `(auth)/signup`: router ignores the `(auth)` part for the url
     - `api/users/[userId]/followers`: square brackets mark a placeholder for the url parameter
 - Idea: we create serverside endpoints springlike and make requests to them using ReactQuery (see below)
 - Example for endpoints: `src/app/api/posts/for-you/route.ts`
@@ -178,6 +178,8 @@ This is the starting code for this tutorial.
      export default function UserButton({ className }: UserButtonProps) {}
     
     ```
+- NOTE: we can only use client components within server components!
+- All chld components automatically inherit component type from parent
 - `export default`: means that the function is automatically imported if the component is
 - `function UserButton()`: this is the component, can be used as HTML tag
 - `({ className }: UserButtonProps)`: props provided to the component; by using as HTML tag we define those pros along

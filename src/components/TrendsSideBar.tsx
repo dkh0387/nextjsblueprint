@@ -1,13 +1,15 @@
+"use server";
+
 import {validateRequest} from "@/auth";
 import {prisma} from "@/lib/prisma";
-import {userDataSelect} from "@/lib/types";
 import {Suspense} from "react";
 import {Loader2} from "lucide-react";
 import Link from "next/link";
 import UserAvatar from "@/components/UserAvatar";
-import {Button} from "@/components/ui/button";
 import {unstable_cache} from "next/cache";
 import {formatNumber} from "@/lib/utils";
+import FollowButton from "@/components/FollowButton";
+import {getUserDataSelect} from "@/lib/types";
 
 /**
  * Trends sidebar as a reusable component.
@@ -21,7 +23,7 @@ import {formatNumber} from "@/lib/utils";
  * so the page where this component is used will wait until the data is fetched and reload then.
  * It is a bad user experience, we need a loading indicator while fetching...
  */
-export default function TrendsSideBar() {
+export default async function TrendsSideBar() {
   return (
     /*hidden on small screens, middle screens is block and large screens is fixed width */
     <div className="sticky top-[5.25rem] hidden h-fit w-72 flex-none space-y-5 md:block lg:w-80">
@@ -34,20 +36,25 @@ export default function TrendsSideBar() {
 }
 
 async function WhoToFollow() {
-    const { user } = await validateRequest();
+  const { user } = await validateRequest();
 
   if (!user) return null;
 
-  /* SELECT id, username, displayName, avatarUrl, FROM users
-                                                                                                                                                                             WHERE id !=: user.id LIMIT 5
-                                                                                                                                                                           */
+  /* SELECT id, username, displayName, avatarUrl, FROM users INNER JOIN followers
+   * WHERE id !=: user.id
+   * AND followers.followerId !=: user.id                                                                                                                                                                                 */
   const usersToFollow = await prisma.user.findMany({
     where: {
       NOT: {
         id: user.id,
       },
+      followers: {
+        none: {
+          followerId: user.id,
+        },
+      },
     },
-    select: userDataSelect,
+    select: getUserDataSelect(user.id),
     take: 5,
   });
   return (
@@ -70,7 +77,15 @@ async function WhoToFollow() {
               </p>
             </div>
           </Link>
-          <Button>Follow</Button>
+          <FollowButton
+            userId={user.id}
+            initialState={{
+              followers: user._count.followers,
+              isFollowedByLoggedInUser: user.followers.some(
+                ({ followerId }) => followerId === user.id,
+              ),
+            }}
+          />
         </div>
       ))}
     </div>
@@ -87,11 +102,11 @@ const getTrendingTopics = unstable_cache(
             ORDER BY count DESC, hashtag ASC
                 LIMIT 5
         `;
-      const map = result.map((row) => ({
-          hashtag: row.hashtag,
-          count: Number(row.count),
-      }));
-      return map;
+    const map = result.map((row) => ({
+      hashtag: row.hashtag,
+      count: Number(row.count),
+    }));
+    return map;
   },
   ["trending_topics"],
   { revalidate: 3 * 60 * 60 }, // caching for 3 hours

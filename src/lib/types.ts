@@ -1,11 +1,25 @@
 import { Prisma } from "@prisma/client";
 
-export const userDataSelect = {
-  id: true,
-  username: true,
-  displayName: true,
-  avatarUrl: true,
-} satisfies Prisma.UserSelect;
+export function getUserDataSelect(loggedInUserId: string) {
+  return {
+    id: true,
+    username: true,
+    displayName: true,
+    avatarUrl: true,
+    followers: {
+      where: {
+        followerId: loggedInUserId,
+      },
+      select: {
+        followerId: true,
+      },
+    },
+    _count: {
+      select: { followers: true },
+    },
+  } satisfies Prisma.UserSelect;
+}
+
 /**
  * Example of extracting a joined object:
  * we do have a user associated to posts.
@@ -14,18 +28,20 @@ export const userDataSelect = {
  * Doing so, we kind of generating a type of Post data including a user (see below)
  * This one is equivalent to "postDataInclude = posts JOIN user"
  */
-export const postDataInclude = {
-  user: {
-    select: userDataSelect,
-  },
-} satisfies Prisma.PostInclude;
+export function getPostDataInclude(loggedInUserId: string) {
+  return {
+    user: {
+      select: getUserDataSelect(loggedInUserId),
+    },
+  } satisfies Prisma.PostInclude;
+}
 
 /**
  * The included user is defined above.
  * Whenever we update the include, PostData is updated automatically.
  */
 export type PostData = Prisma.PostGetPayload<{
-  include: typeof postDataInclude;
+  include: ReturnType<typeof getPostDataInclude>;
 }>;
 
 export interface PostsPage {

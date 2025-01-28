@@ -130,6 +130,8 @@ This is the starting code for this tutorial.
 - If we need to provide references from a parent component into an internal element of a child component, we do need to
   use `React.forwardRef`
 - Example for that: `PasswordInput` child component inside the `SignUpForm`
+- Any child component of a client component is automatically a client component, so no explicitly annotation
+  `use client` needed
 
 # Context provider
 
@@ -150,6 +152,7 @@ This is the starting code for this tutorial.
 
 - ***NOTE:*** all CSS stuff is coming from Tailwind CSS classes
 - Some explanation on CSS classes in `Navbar.tsx`
+- Usage of groups inside a component: `src/components/posts/Post.tsx`
 
 # React component
 

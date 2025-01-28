@@ -1,12 +1,15 @@
 "use client";
 
-import { PostData } from "@/lib/types";
+import {PostData} from "@/lib/types";
 import Link from "next/link";
 import UserAvatar from "@/components/UserAvatar";
-import { formatRelativeDate } from "@/lib/utils";
-import { useSession } from "@/app/(main)/SessionProvider";
+import {formatRelativeDate} from "@/lib/utils";
+import {useSession} from "@/app/(main)/SessionProvider";
 import PostMoreButton from "@/components/posts/PostMoreButton";
 
+/**
+ * Single post canvas.
+ */
 interface PostProps {
   post: PostData;
 }
@@ -16,8 +19,10 @@ export default function Post({ post }: PostProps) {
   const { user } = useSession();
 
   return (
-    /*group: we group here to hover over the whole div for showing the PostMoreButton*/
-    <article className="group space-y-3 rounded-2xl bg-card p-5 shadow-sm">
+    /*group: we group here to hover over the whole div for showing the PostMoreButton
+     * NOTE: if we have multiple groups (like posts and their comments) groups need names to separate them
+     * */
+    <article className="group/post space-y-3 rounded-2xl bg-card p-5 shadow-sm">
       <div className="flex justify-between gap-3">
         <div className="flex flex-wrap gap-3">
           <Link href={`/user/${post.user.username}`}>
@@ -41,8 +46,11 @@ export default function Post({ post }: PostProps) {
         {post.user.id === user.id && (
           <PostMoreButton
             post={post}
-            /*Usage of group from the article above*/
-            className="opacity-0 transition-opacity group-hover:opacity-100"
+            /*Usage of group from the article above
+             * opacity-0: the button is transparent as default
+             * transition-opacity: the change is animated
+             * */
+            className="opacity-0 transition-opacity group-hover/post:opacity-100"
           ></PostMoreButton>
         )}
       </div>

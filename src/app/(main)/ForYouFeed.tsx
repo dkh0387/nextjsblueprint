@@ -76,11 +76,6 @@ export default function ForYouFeed() {
         <Post key={post.id} post={post} />
       ))}
       {isFetching && <Loader2 className="mx-auto my-3 animate-spin" />}
-{/*      <DeletePostDialog
-        open
-        onClose={() => {}}
-        post={posts[0]}
-      ></DeletePostDialog>*/}
     </InfiniteScrollContainer>
   );
 }

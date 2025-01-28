@@ -106,7 +106,6 @@ This is the starting code for this tutorial.
       })
       ```
 
-- Directory naming: `(auth)\signup`: router ignores the `(auth)` part for the url
 - Backend in NexJS: we use server actions (functions, which generate requests for CRUD, etc.), see
   `(auth)/signup/actions.ts` as example
 - Creating a page:
@@ -122,6 +121,14 @@ This is the starting code for this tutorial.
     - `<components>.tsx`: components itself, rendered clientside
     - `actions.ts`: backend services
     - `lib/....ts`: lib files
+
+# Routing
+
+- Directory naming:
+    - `(auth)\signup`: router ignores the `(auth)` part for the url
+    - `api/users/[userId]/followers`: square brackets mark a placeholder for the url parameter
+- Idea: we create serverside endpoints springlike and make requests to them using ReactQuery (see below)
+- Example for endpoints: `src/app/api/posts/for-you/route.ts`
 
 # Component referencing
 
@@ -213,8 +220,6 @@ This is the starting code for this tutorial.
 - Data caching, avoiding raise conditions, infinite loading, optimistic updates, etc.
 - Similar to state libs like redux
 - Completely responsible for server states, runs on the server side
-- Idea: we create serverside endpoints springlike and make requests to them using ReactQuery
-- Example for such endpoints: `src/app/api/posts/for-you/route.ts`
 - Example of fetching and caching data from endpoint: `src/app/(main)/ForYouFeed.tsx`
 - Structure:
     - `ReactQueryPrivider.tsx`: client component as a context provider for ReactQuery. We wrap the whole context inside,

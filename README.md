@@ -129,6 +129,14 @@ This is the starting code for this tutorial.
     - `api/users/[userId]/followers`: square brackets mark a placeholder for the url parameter
 - Idea: we create serverside endpoints springlike and make requests to them using ReactQuery (see below)
 - Example for endpoints: `src/app/api/posts/for-you/route.ts`
+- We can then call endpoints with `kyInstance` by using the directory path to the `route.ts`:
+
+  ```
+  kyInstance.delete(`api/users/${props.userId}/followers`)
+  ```
+- NOTE: if we want to cache the result, we wrap the call with `useQuery({})`; if we want update in place we use
+  `useMutation({})` (`OptimisticUpdate`).
+  See "Cache" and "ReactQuery" sections below
 
 # Component referencing
 
@@ -214,6 +222,7 @@ This is the starting code for this tutorial.
 - `cache()`: function to cache clientside data for sharing between components. Example: `src/auth.ts`
 - `unstable_cache()`: function to cache serverside data to avoid multiple db requests by page reloading. Example:
   `components/TrendSideBar.tsx`
+- Usage of ReactQuery (see below)
 
 # React Query
 
@@ -235,6 +244,7 @@ This is the starting code for this tutorial.
     - Solution: mutation, see example `src/components/posts/editor/mutations.ts`
     - Example for argument binding between mutation function and mutation call:
       `src/components/posts/DeletePostDialog.tsx`
+    - Example of `OptimisticUpdate`: `src/components/FollowButton.tsx`
 
 # Infinite Loading
 

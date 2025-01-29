@@ -9,12 +9,10 @@ import InfiniteScrollContainer from "@/components/InfiniteScrollContainer";
 import PostsLoadingSkeleton from "@/components/posts/PostsLoadingSkeleton";
 
 /**
- * Example of fetching data from an endpoint.
- * All data get a key and are cached through ReactQuery caching.
- * If the component is being opened again, we revalidate data using the key.
+ * Endpoint for fetching the following feed from users whom the logged-in user is following.
  * @constructor
  */
-export default function ForYouFeed() {
+export default function FollowingFeed() {
   const {
     data,
     fetchNextPage,
@@ -23,19 +21,11 @@ export default function ForYouFeed() {
     isFetchingNextPage,
     status,
   } = useInfiniteQuery({
-    queryKey: ["post-feed", "for-you"],
-    /*The way to fetch data from endpoint without Ky*/
-    /*    queryFn: async () => {
-    const res = await fetch("api/posts/for-you");
-
-    if (!res.ok) {
-      throw Error(`Request failed with status code ${res.status}`);
-    }
-    return res.json();},*/
+    queryKey: ["post-feed", "following"],
     queryFn: ({ pageParam }) =>
       kyInstance
         .get(
-          "api/posts/for-you",
+          "api/posts/following",
           pageParam ? { searchParams: { cursor: pageParam } } : {},
         )
         .json<PostsPage>(),
@@ -53,7 +43,7 @@ export default function ForYouFeed() {
   if (status === "success" && !posts.length && !hasNextPage) {
     return (
       <p className="text-center text-muted-foreground">
-        There are no posts yet.
+        No Posts found.
       </p>
     );
   }

@@ -3,7 +3,7 @@
 import {FollowerInfo} from "@/lib/types";
 import useFollowerInfo from "@/hooks/useFollowerInfo";
 import {useToast} from "@/components/ui/use-toast";
-import {useMutation, useQueryClient} from "@tanstack/react-query";
+import {QueryKey, useMutation, useQueryClient} from "@tanstack/react-query";
 import {Button} from "@/components/ui/button";
 import kyInstance from "@/lib/ky";
 
@@ -23,15 +23,44 @@ interface FollowButtonProps {
   initialState: FollowerInfo;
 }
 
+/**
+ * The full example of optimistic update functionality.
+ * Context: follow/unfollow a user and update cached follower info in place.
+ * @param props
+ * @constructor
+ */
 export default function FollowButton(props: FollowButtonProps) {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const { data } = useFollowerInfo(props.userId, props.initialState);
+  const queryKey: QueryKey = ["follower-info", props.userId];
   const { mutate } = useMutation({
     mutationFn: () =>
       data.isFollowedByLoggedInUser
         ? kyInstance.delete(`api/users/${props.userId}/followers`)
         : kyInstance.post(`api/users/${props.userId}/followers`),
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey });
+      // in case the update did not work and for update base
+      const previousState = queryClient.getQueryData<FollowerInfo>(queryKey);
+      // optimistic update the previousState
+      queryClient.setQueryData<FollowerInfo>(queryKey, () => ({
+        followers:
+          (previousState?.followers || 0) +
+          (previousState?.isFollowedByLoggedInUser ? -1 : 1),
+        isFollowedByLoggedInUser: !previousState?.isFollowedByLoggedInUser,
+      }));
+      return { previousState };
+    },
+    // rollback and go to the previousState
+    onError: (error, variables, context) => {
+      queryClient.setQueryData<FollowerInfo>(queryKey, context?.previousState);
+      console.error(error);
+      toast({
+        variant: "destructive",
+        description: "Something went wrong. Please try again later.",
+      });
+    },
   });
   return (
     /*Depending on whether we are already following the user or not*/

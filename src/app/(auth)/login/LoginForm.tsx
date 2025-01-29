@@ -83,7 +83,7 @@ export default function LoginForm() {
         {/*For loading, we could use form.formState.isSubmitting,
         but it does not take the redirect into account, so we need to use isPending from transition.*/}
         <LoadingButton loading={isPending} type="submit" className="w-full">
-          Create account
+          Log in
         </LoadingButton>
       </form>
     </Form>

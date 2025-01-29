@@ -2,6 +2,7 @@ import {useToast} from "@/components/ui/use-toast";
 import {PostsPage} from "@/lib/types";
 import {InfiniteData, QueryFilters, useMutation, useQueryClient,} from "@tanstack/react-query";
 import {submitPost} from "./actions";
+import {useSession} from "@/app/(main)/SessionProvider";
 
 /**
  * ReactQuery posts mutation on submitting.
@@ -21,11 +22,23 @@ export function useSubmitPostMutation() {
 
   const queryClient = useQueryClient();
 
+  const { user } = useSession();
+
   const mutation = useMutation({
     mutationFn: submitPost,
     onSuccess: async (newPost) => {
       // filter cached data, which we want to change, by the key
-      const queryFilter: QueryFilters = { queryKey: ["post-feed", "for-you"] };
+      // changes not only the posts on the main page, but also on the user profile page
+      const queryFilter = {
+        queryKey: ["post-feed"],
+        predicate(query) {
+          return (
+            query.queryKey.includes("for-you") ||
+            (query.queryKey.includes("user-posts") &&
+              query.queryKey.includes(user.id))
+          );
+        },
+      } satisfies QueryFilters;
 
       await queryClient.cancelQueries(queryFilter);
 
@@ -61,7 +74,7 @@ export function useSubmitPostMutation() {
       await queryClient.invalidateQueries({
         queryKey: queryFilter.queryKey,
         predicate(query) {
-          return !query.state.data;
+          return queryFilter.predicate(query) && !query.state.data;
         },
       });
 

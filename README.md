@@ -187,7 +187,8 @@ This is the starting code for this tutorial.
     
     ```
 - NOTE: we can only use client components within server components!
-- All chld components automatically inherit component type from parent
+- NOTE: we can only call hooks within client components!
+- All child components automatically inherit component type from parent
 - `export default`: means that the function is automatically imported if the component is
 - `function UserButton()`: this is the component, can be used as HTML tag
 - `({ className }: UserButtonProps)`: props provided to the component; by using as HTML tag we define those pros along

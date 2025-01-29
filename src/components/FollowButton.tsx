@@ -5,7 +5,7 @@ import useFollowerInfo from "@/hooks/useFollowerInfo";
 import {useToast} from "@/components/ui/use-toast";
 import {QueryKey, useMutation, useQueryClient} from "@tanstack/react-query";
 import {Button} from "@/components/ui/button";
-import kyInstance from "@/lib/ky";
+import ky from "ky";
 
 /**
  * 1. useToast is a custom hook that is likely to display a toast message,
@@ -34,6 +34,8 @@ export default function FollowButton(props: FollowButtonProps) {
   const queryClient = useQueryClient();
   const { data } = useFollowerInfo(props.userId, props.initialState);
   const queryKey: QueryKey = ["follower-info", props.userId];
+  const baseURL = process.env.REACT_APP_BASE_URL || 'http://localhost:3000';
+  const kyInstance = ky.create({ prefixUrl: baseURL });
   const { mutate } = useMutation({
     mutationFn: () =>
       data.isFollowedByLoggedInUser
@@ -58,7 +60,7 @@ export default function FollowButton(props: FollowButtonProps) {
       console.error(error);
       toast({
         variant: "destructive",
-        description: "Something went wrong. Please try again later.",
+        description: error.message,
       });
     },
   });

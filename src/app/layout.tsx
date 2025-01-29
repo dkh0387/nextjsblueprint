@@ -4,7 +4,7 @@ import "./globals.css";
 import React from "react";
 import { ThemeProvider } from "next-themes";
 import { Toaster } from "@/components/ui/toaster";
-import ReactQueryProvider from "@/app/(main)/ReactQueryProvider";
+import ReactQueryProvider from "@/app/ReactQueryProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -17,10 +17,10 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | bugbook",
-    default: "bugbook",
+    template: "%s | playground",
+    default: "playground",
   },
-  description: "The social media app for powernerds",
+  description: "The social media app for playing around",
 };
 
 export default function RootLayout({

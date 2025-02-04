@@ -11,6 +11,7 @@ import FollowerCount from "@/components/FollowerCount";
 import FollowButton from "@/components/FollowButton";
 import {Button} from "@/components/ui/button";
 import UserPosts from "@/app/(main)/users/[username]/UserPosts";
+import Linkify from "@/components/Linkify";
 
 /**
  * User page server component.
@@ -64,18 +65,18 @@ export default async function Page(props: PageProps) {
   }
   const user = await getUser(props.params.username, loggedInUser.id);
   return (
-      <main className="flex w-full min-w-0 gap-5">
-        <div className="w-full min-w-0 space-y-5">
-          <UserProfile user={user} loggedInUserId={loggedInUser.id} />
-          <div className="rounded-2xl bg-card p-5 shadow-sm">
-            <h2 className="text-center text-2xl font-bold">
-              {user.displayName}&apos;s posts
-            </h2>
-          </div>
-          <UserPosts userId={user.id} />
+    <main className="flex w-full min-w-0 gap-5">
+      <div className="w-full min-w-0 space-y-5">
+        <UserProfile user={user} loggedInUserId={loggedInUser.id} />
+        <div className="rounded-2xl bg-card p-5 shadow-sm">
+          <h2 className="text-center text-2xl font-bold">
+            {user.displayName}&apos;s posts
+          </h2>
         </div>
-        <TrendsSideBar />
-      </main>
+        <UserPosts userId={user.id} />
+      </div>
+      <TrendsSideBar />
+    </main>
   );
 }
 
@@ -132,9 +133,11 @@ async function UserProfile(props: UserProfileProps) {
       {props.user.bio && (
         <>
           <hr />
-          <div className="overflow-hidden whitespace-pre-line break-words">
-            {props.user.bio}
-          </div>
+          <Linkify>
+            <div className="overflow-hidden whitespace-pre-line break-words">
+              {props.user.bio}
+            </div>
+          </Linkify>
         </>
       )}
     </div>

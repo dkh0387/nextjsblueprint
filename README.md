@@ -262,3 +262,20 @@ This is the starting code for this tutorial.
 # Confirmation dialog
 
 - Example: `src/components/posts/DeletePostDialog.tsx`
+
+# Reading `.env` variables in code
+
+- See `src/app/api/uploadthing/core.ts` as example
+
+# File upload
+
+- We use https://uploadthing.com/
+- Wrapper around AWS S3, but easier to use
+- We need to set up the file uploader like `src/app/api/uploadthing/core.ts`
+- NOTE: app id env variable has to have the prefix `NEXT_PUBLIC`
+- A unique upload url is needed to restrict from external usage
+- We need a `route.ts` file for upload endpoints
+- Usage of UI components:
+    - Modify `tailwind.config.ts` file: `export default withUt(config)`
+    - Exporting hooks for uploading: `src/lib/uploadthing.ts`
+    - Add SSR plugin to the `src/app/layout.tsx`: `<NextSSRPlugin routerConfig={extractRouterConfig(fileRouter)} />`

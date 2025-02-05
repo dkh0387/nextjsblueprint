@@ -9,7 +9,7 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: "https:",
+        protocol: "https",
         hostname: "utfs.io",
         // We have to provide a unique pathname, because otherwise anyone could use our app for upload images,
         // since there is only a limited number of uploads, we need to restrict this.

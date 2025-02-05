@@ -6,6 +6,7 @@
 import React from "react";
 import Link from "next/link";
 import { LinkIt, LinkItUrl } from "react-linkify-it";
+import UserLinkWithTooltip from "./UserLinkWithTooltip";
 
 interface LinkifyProps {
   children: React.ReactNode;
@@ -15,7 +16,7 @@ export default function Linkify(props: LinkifyProps) {
   return (
     <LinkifyUsername>
       <LinkifyHashtag>
-        <LinkifyUrl children={props.children}></LinkifyUrl>
+        <LinkifyUrl>{props.children}</LinkifyUrl>
       </LinkifyHashtag>
     </LinkifyUsername>
   );
@@ -34,19 +35,12 @@ function LinkifyUsername(props: LinkifyProps) {
     <LinkIt
       /*looking for username with @*/
       regex={/(@[a-zA-Z0-9_-]+)/}
-      component={(match, key) => {
+      component={(match, key) => (
         /*remove @ in front*/
-        const username = match.slice(1);
-        return (
-          <Link
-            key={key}
-            href={`/users/${username}`}
-            className="text-primary hover:underline"
-          >
-            {match}
-          </Link>
-        );
-      }}
+        <UserLinkWithTooltip key={key} username={match.slice(1)}>
+          {match}
+        </UserLinkWithTooltip>
+      )}
     >
       {props.children}
     </LinkIt>

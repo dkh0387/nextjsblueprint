@@ -9,7 +9,7 @@ import UserAvatar from "@/components/UserAvatar";
 import {unstable_cache} from "next/cache";
 import {formatNumber} from "@/lib/utils";
 import FollowButton from "@/components/FollowButton";
-import {getUserDataSelect} from "@/lib/types";
+import {getFollowingUserDataSelect} from "@/lib/types";
 import UserTooltip from "@/components/UserTooltip";
 
 /**
@@ -55,7 +55,7 @@ async function WhoToFollow() {
         },
       },
     },
-    select: getUserDataSelect(user.id),
+    select: getFollowingUserDataSelect(user.id),
     take: 5,
   });
   return (

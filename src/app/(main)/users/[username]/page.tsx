@@ -1,6 +1,6 @@
 import React, {cache} from "react";
 import {prisma} from "@/lib/prisma";
-import {FollowerInfo, getUserDataSelect, UserData} from "@/lib/types";
+import {FollowerInfo, getFollowingUserDataSelect, UserData} from "@/lib/types";
 import {notFound} from "next/navigation";
 import {validateRequest} from "@/auth";
 import TrendsSideBar from "@/components/TrendsSideBar";
@@ -33,7 +33,7 @@ const getUser = cache(async (username: string, loggedInUserId: string) => {
     where: {
       username: { equals: username, mode: "insensitive" },
     },
-    select: getUserDataSelect(loggedInUserId),
+    select: getFollowingUserDataSelect(loggedInUserId),
   });
 
   if (!user) notFound();

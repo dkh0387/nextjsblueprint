@@ -29,6 +29,8 @@ import { useRef, useState } from "react";
 import { Label } from "@/components/ui/label";
 import avatarPlaceholder from "@/assets/avatar-placeholder.png";
 import { Camera } from "lucide-react";
+import CropImageDialog from "@/components/CropImageDialog";
+import Resizer from "react-image-file-resizer";
 
 interface EditProfileDialogProps {
   user: UserData;
@@ -50,10 +52,15 @@ export default function EditProfileDialog(props: EditProfileDialogProps) {
   const [croppedAvatar, setCroppedAvatar] = useState<Blob | null>(null);
 
   async function onSubmit(values: UpdateUserProfileValues) {
+    const newAvatarFile = croppedAvatar
+      ? new File([croppedAvatar], `avatar_${props.user.id}.webp`)
+      : undefined;
+    // Save changes after editing and uploading avatar
     mutation.mutate(
-      { values },
+      { values, avatar: newAvatarFile },
       {
         onSuccess: () => {
+          setCroppedAvatar(null);
           props.onOpenChange(false);
         },
       },
@@ -136,6 +143,16 @@ function AvatarInput(props: AvatarInputProps) {
 
   function onImageSelected(image: File | undefined) {
     if (!image) return;
+    Resizer.imageFileResizer(
+      image,
+      1024,
+      1024,
+      "WEBP",
+      100,
+      0,
+      (uri) => setImageToCrop(uri as File),
+      "file",
+    );
   }
 
   return (
@@ -163,6 +180,21 @@ function AvatarInput(props: AvatarInputProps) {
           <Camera size={24} />
         </span>
       </button>
+      {imageToCrop && (
+        <CropImageDialog
+          src={URL.createObjectURL(imageToCrop)}
+          cropAspectRatio={1}
+          onCropped={props.onImageCropped}
+          onClose={() => {
+            setImageToCrop(undefined);
+            /*We have to reset a selected image because otherwise,
+                                                                                    after closing and selecting the same image state change would not trigger*/
+            if (fileInputRef.current) {
+              fileInputRef.current.value = "";
+            }
+          }}
+        />
+      )}
     </>
   );
 }

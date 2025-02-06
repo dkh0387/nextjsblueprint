@@ -10,7 +10,7 @@ const f = createUploadthing();
 
 export const fileRouter = {
   avatar: f({
-    image: { maxFileSize: "512KB" },
+    image: { maxFileSize: "512KB", maxFileCount: 1, minFileCount: 1 },
   })
     // User validation has to appear before the upload starts.
     // User data are passed to the metadate below.
@@ -26,7 +26,7 @@ export const fileRouter = {
       // The new url has to be whitelisted in next.config.mjs
       const newAvatarUrl = file.url.replace(
         "/f/",
-        `/a/${process.env.NEXT_PUBLIC_UPLOADTHING_APP_ID}`,
+        `/a/${process.env.NEXT_PUBLIC_UPLOADTHING_APP_ID}/`,
       );
       await prisma.user.update({
         where: { id: metadata.user.id },

@@ -13,7 +13,7 @@ const nextConfig = {
         hostname: "utfs.io",
         // We have to provide a unique pathname, because otherwise anyone could use our app for upload images,
         // since there is only a limited number of uploads, we need to restrict this.
-        pathname: `/a/${process.env.NEXT_PUBLIC_UPLOADTHING_APP_ID}`,
+        pathname: `/a/${process.env.NEXT_PUBLIC_UPLOADTHING_APP_ID}/*`,
       },
     ],
   },

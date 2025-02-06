@@ -263,6 +263,7 @@ This is the starting code for this tutorial.
 
 - Example of a confirmation dialog: `src/components/posts/DeletePostDialog.tsx`
 - Example of a dialog with bindings and optimistic update: `src/app/(main)/users/[username]/EditProfileDialog.tsx`
+- Dialog for upload images: `src/components/CropImageDialog.tsx`
 
 # Reading `.env` variables in code
 

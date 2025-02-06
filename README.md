@@ -259,9 +259,10 @@ This is the starting code for this tutorial.
 
 - Just for test purpose: `await new Promise(r => setTimeout(r, 2000));`
 
-# Confirmation dialog
+# Dialog
 
-- Example: `src/components/posts/DeletePostDialog.tsx`
+- Example of a confirmation dialog: `src/components/posts/DeletePostDialog.tsx`
+- Example of a dialog with bindings and optimistic update: `src/app/(main)/users/[username]/EditProfileDialog.tsx`
 
 # Reading `.env` variables in code
 

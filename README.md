@@ -281,3 +281,4 @@ This is the starting code for this tutorial.
     - Modify `tailwind.config.ts` file: `export default withUt(config)`
     - Exporting hooks for uploading: `src/lib/uploadthing.ts`
     - Add SSR plugin to the `src/app/layout.tsx`: `<NextSSRPlugin routerConfig={extractRouterConfig(fileRouter)} />`
+- Example of usage: `src/components/posts/editor/useMediaUpload.ts`

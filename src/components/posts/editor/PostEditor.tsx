@@ -1,17 +1,30 @@
 "use client";
 
-import { useSession } from "@/app/(main)/SessionProvider";
-import { Button } from "@/components/ui/button";
+import {useSession} from "@/app/(main)/SessionProvider";
+import {Button} from "@/components/ui/button";
 import UserAvatar from "@/components/UserAvatar";
 import Placeholder from "@tiptap/extension-placeholder";
-import { EditorContent, useEditor } from "@tiptap/react";
+import {EditorContent, useEditor} from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import "./styles.css";
-import { useSubmitPostMutation } from "@/components/posts/editor/mutations";
+import {useSubmitPostMutation} from "@/components/posts/editor/mutations";
+import useMediaUpload from "@/components/posts/editor/useMediaUpload";
 
+/**
+ * Component for creating a new post.
+ * @constructor
+ */
 export default function PostEditor() {
   const { user } = useSession();
   const mutation = useSubmitPostMutation();
+  const {
+    startUpload: handleStartUpload,
+    attachments,
+    isUploading,
+    uploadProgress,
+    removeAttachment,
+    resetMediaUploads,
+  } = useMediaUpload();
 
   const editor = useEditor({
     extensions: [
@@ -31,11 +44,19 @@ export default function PostEditor() {
     }) || "";
 
   function onSubmit() {
-    mutation.mutate(input, {
-      onSuccess: () => {
-        editor?.commands.clearContent();
+    mutation.mutate(
+      {
+        content: input,
+        // filter(Boolean): only defined entries
+        mediaIds: attachments.map((a) => a.mediaId).filter(Boolean) as string[],
       },
-    });
+      {
+        onSuccess: () => {
+          editor?.commands.clearContent();
+          resetMediaUploads();
+        },
+      },
+    );
   }
 
   return (

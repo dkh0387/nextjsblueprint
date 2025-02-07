@@ -59,11 +59,31 @@ model Follow {
 }
 
 model Post {
-  id        String   @id @default(cuid())
-  content   String
-  userId    String
-  user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
-  createdAt DateTime @default(now())
+  id          String   @id @default(cuid())
+  content     String
+  userId      String
+  user        User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+  attachments Media[]
+  createdAt   DateTime @default(now())
 
   @@map("posts")
+}
+
+// M:1 relation between posts and attachments.
+// We do want upload them BEFORE they are actually ttached to a post to avoid poading time,
+// so the FK has to be nullable
+model Media {
+  id        String    @id @default(cuid())
+  postId    String?
+  post      Post?     @relation(fields: [postId], references: [id], onDelete: SetNull)
+  type      MediaType
+  url       String
+  createdAt DateTime  @default(now())
+
+  @@map("post_media")
+}
+
+enum MediaType {
+  IMAGE
+  VIDEO
 }

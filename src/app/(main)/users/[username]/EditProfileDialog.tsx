@@ -188,7 +188,7 @@ function AvatarInput(props: AvatarInputProps) {
           onClose={() => {
             setImageToCrop(undefined);
             /*We have to reset a selected image because otherwise,
-                                                                                    after closing and selecting the same image state change would not trigger*/
+              after closing and selecting the same image state change would not trigger*/
             if (fileInputRef.current) {
               fileInputRef.current.value = "";
             }

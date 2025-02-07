@@ -2,6 +2,7 @@ import {createUploadthing, FileRouter} from "uploadthing/next";
 import {validateRequest} from "@/auth";
 import {UploadThingError} from "@uploadthing/shared";
 import {prisma} from "@/lib/prisma";
+import {UTApi} from "uploadthing/server";
 
 /**
  * Uploadthing file router.
@@ -21,6 +22,16 @@ export const fileRouter = {
       return { user };
     })
     .onUploadComplete(async ({ metadata, file }) => {
+      // Delete an old avatar by key
+      const oldAvatarUrl = metadata.user.avatarUrl;
+
+      if (oldAvatarUrl) {
+        const key = oldAvatarUrl.split(
+          `/a/${process.env.NEXT_PUBLIC_UPLOADTHING_APP_ID}/`,
+        )[1];
+        await new UTApi().deleteFiles(key);
+      }
+
       // We need to use a unique url according to our app,
       // otherwise anyone could use it.
       // The new url has to be whitelisted in next.config.mjs

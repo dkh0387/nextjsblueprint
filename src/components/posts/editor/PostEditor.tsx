@@ -9,7 +9,7 @@ import StarterKit from "@tiptap/starter-kit";
 import "./styles.css";
 import {useSubmitPostMutation} from "@/components/posts/editor/mutations";
 import useMediaUpload, {Attachment,} from "@/components/posts/editor/useMediaUpload";
-import {useRef} from "react";
+import {ClipboardEvent, useRef} from "react";
 import {ImageIcon, Loader2, X} from "lucide-react";
 import LoadingButton from "@/components/LoadingButton";
 import {cn} from "@/lib/utils";
@@ -72,6 +72,16 @@ export default function PostEditor() {
     );
   }
 
+  /*
+          Copy&Paste attachments.
+           */
+  function onPaste(e: ClipboardEvent<HTMLInputElement>) {
+    const files = Array.from(e.clipboardData.items)
+      .filter((i) => i.kind === "file")
+      .map((i) => i.getAsFile()) as File[];
+    startUpload(files);
+  }
+
   return (
     <div className="flex flex-col gap-5 rounded-2xl bg-card p-5 shadow-sm">
       <div className="flex gap-5">
@@ -86,6 +96,7 @@ export default function PostEditor() {
               "max-h-[20rem] w-full overflow-y-auto rounded-2xl bg-background px-5 py-3",
               isUploading && "outline-dashed",
             )}
+            onPaste={onPaste}
           />
           <input {...getInputProps()} />
         </div>

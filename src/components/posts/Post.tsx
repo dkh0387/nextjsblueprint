@@ -3,11 +3,13 @@
 import {PostData} from "@/lib/types";
 import Link from "next/link";
 import UserAvatar from "@/components/UserAvatar";
-import {formatRelativeDate} from "@/lib/utils";
+import {cn, formatRelativeDate} from "@/lib/utils";
 import {useSession} from "@/app/(main)/SessionProvider";
 import PostMoreButton from "@/components/posts/PostMoreButton";
 import Linkify from "@/components/Linkify";
 import UserTooltip from "@/components/UserTooltip";
+import {Media} from "@prisma/client";
+import Image from "next/image";
 
 /**
  * Single post canvas.
@@ -63,6 +65,58 @@ export default function Post({ post }: PostProps) {
       <Linkify>
         <div className="whitespace-pre-line break-words">{post.content}</div>
       </Linkify>
+      {!!post.attachments.length && (
+        <MediaPreviews attachments={post.attachments} />
+      )}
     </article>
   );
+}
+
+interface MediaPreviewsProps {
+  attachments: Media[];
+}
+
+function MediaPreviews(props: MediaPreviewsProps) {
+  return (
+    <div
+      className={cn(
+        "flex flex-col gap-3",
+        props.attachments.length > 1 && "sm:grid-cols-2",
+      )}
+    >
+      {props.attachments.map((m) => (
+        <MediaPreview key={m.id} media={m} />
+      ))}
+    </div>
+  );
+}
+
+interface MediaPreviewProps {
+  media: Media;
+}
+
+function MediaPreview(props: MediaPreviewProps) {
+  if (props.media.type === "IMAGE") {
+    return (
+      <Image
+        src={props.media.url}
+        alt="Attachment"
+        width={500}
+        height={500}
+        className="mx-auto size-fit max-h-[30rem] rounded-2xl"
+      />
+    );
+  }
+  if (props.media.type === "VIDEO") {
+    return (
+      <div>
+        <video
+          src={props.media.url}
+          controls
+          className="mx-auto size-fit max-h-[30rem] rounded-2xl"
+        ></video>
+      </div>
+    );
+  }
+  return <p className="text-destructive">Unsupported media type</p>;
 }

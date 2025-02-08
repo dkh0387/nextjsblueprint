@@ -36,12 +36,14 @@ export type UserData = Prisma.UserGetPayload<{
  * we use the `satisfies` key word.
  * Doing so, we kind of generating a type of Post data including a user (see below)
  * This one is equivalent to "postDataInclude = posts JOIN user"
+ * Similary, we fetch the attachments.
  */
 export function getPostDataInclude(loggedInUserId: string) {
   return {
     user: {
       select: getFollowingUserDataSelect(loggedInUserId),
     },
+    attachments: true,
   } satisfies Prisma.PostInclude;
 }
 

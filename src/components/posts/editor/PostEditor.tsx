@@ -94,7 +94,7 @@ export default function PostEditor() {
                 editor={editor}
                 className={cn(
                     "max-h-[20rem] w-full overflow-y-auto rounded-2xl bg-background px-5 py-3",
-                    isUploading && "outline-dashed",
+                    isDragActive && "outline-dashed",
                 )}
                 onPaste={onPaste}
             />

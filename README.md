@@ -89,6 +89,7 @@ This is the starting code for this tutorial.
 
 # Project structure
 
+- NOTE: if we render a component inside a server component, it has to be annotated with `"use client"`
 - Separate the app in two parts: ath part and main part, since the auth part does not need a frame
 - Wrapping the whole layout of the app: use `src/app/layout.tsx` file to set title, etc.
 - Purpose of `(...)` directories:
@@ -284,4 +285,10 @@ This is the starting code for this tutorial.
 - Example of usage: `src/components/posts/editor/useMediaUpload.ts`
 - Example of drag&drop and copy&paste by upload: `src/components/posts/editor/PostEditor.tsx`
 - Uploadthing endpoints usage: `src/app/api/clear-uploads/route.ts` (deleting media based on auth and cron via
-  `vercel.json`; PROD only) 
+  `vercel.json`; PROD only)
+
+# Error handling
+
+- HydrationWarning:
+    - If we show data with timestamp, where there is a delay between server and client time, we get it
+    - Solution: use `suppressHydrationWarning` inside the tag, see `src/components/posts/Post.tsx`

@@ -11,12 +11,11 @@ import {useSession} from "@/app/(main)/SessionProvider";
  * Toast allows showing a message in the bottom right corner (like notifications).
  */
 export function useSubmitPostMutation() {
-  let promise = new Promise(function (resolve, reject) {
-    // eine Funktion, die dauert, bis Sie fertig ist
+/*  let promise = new Promise(function (resolve, reject) {
     setTimeout(function () {
       resolve("Versprochenes Ergebnis");
     }, 2000);
-  });
+  });*/
 
   const { toast } = useToast();
 

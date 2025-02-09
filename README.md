@@ -282,3 +282,6 @@ This is the starting code for this tutorial.
     - Exporting hooks for uploading: `src/lib/uploadthing.ts`
     - Add SSR plugin to the `src/app/layout.tsx`: `<NextSSRPlugin routerConfig={extractRouterConfig(fileRouter)} />`
 - Example of usage: `src/components/posts/editor/useMediaUpload.ts`
+- Example of drag&drop and copy&paste by upload: `src/components/posts/editor/PostEditor.tsx`
+- Uploadthing endpoints usage: `src/app/api/clear-uploads/route.ts` (deleting media based on auth and cron via
+  `vercel.json`; PROD only) 

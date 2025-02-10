@@ -10,6 +10,7 @@ import Linkify from "@/components/Linkify";
 import UserTooltip from "@/components/UserTooltip";
 import {Media} from "@prisma/client";
 import Image from "next/image";
+import LikeButton from "@/components/posts/LikeButton";
 
 /**
  * Single post canvas.
@@ -20,7 +21,7 @@ interface PostProps {
 
 export default function Post({ post }: PostProps) {
   // NOTE: since it is a client component, we cannot use validateRequest() here.
-  const { user } = useSession();
+  const { user: loggedInUser } = useSession();
 
   return (
     /*group: we group here to hover over the whole div for showing the PostMoreButton
@@ -52,7 +53,7 @@ export default function Post({ post }: PostProps) {
             </Link>
           </div>
         </div>
-        {post.user.id === user.id && (
+        {post.user.id === loggedInUser.id && (
           <PostMoreButton
             post={post}
             /*Usage of group from the article above
@@ -69,6 +70,16 @@ export default function Post({ post }: PostProps) {
       {!!post.attachments.length && (
         <MediaPreviews attachments={post.attachments} />
       )}
+      <LikeButton
+        isHidden={post.user.id === loggedInUser.id}
+        postId={post.id}
+        initialState={{
+          likes: post._count.likes,
+          isLikedByLoggedInUser: post.likes.some(
+            (l) => l.userId === loggedInUser.id,
+          ),
+        }}
+      />
     </article>
   );
 }

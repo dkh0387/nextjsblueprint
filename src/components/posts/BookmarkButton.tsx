@@ -46,7 +46,7 @@ export default function BookmarkButton(props: BookmarkButtonProps) {
     onMutate: async () => {
       toast({
         description: `Post ${data?.isBookmarkedByLoggedInUser ? "un" : ""}bookmarked`,
-      })
+      });
       await queryClient.cancelQueries({ queryKey });
       // in case the update did not work and for update base
       const previousState = queryClient.getQueryData<BookmarkInfo>(queryKey);

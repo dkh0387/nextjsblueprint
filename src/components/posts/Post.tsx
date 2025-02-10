@@ -11,6 +11,7 @@ import UserTooltip from "@/components/UserTooltip";
 import {Media} from "@prisma/client";
 import Image from "next/image";
 import LikeButton from "@/components/posts/LikeButton";
+import BookmarkButton from "@/components/posts/BookmarkButton";
 
 /**
  * Single post canvas.
@@ -70,16 +71,26 @@ export default function Post({ post }: PostProps) {
       {!!post.attachments.length && (
         <MediaPreviews attachments={post.attachments} />
       )}
-      <LikeButton
-        isHidden={post.user.id === loggedInUser.id}
-        postId={post.id}
-        initialState={{
-          likes: post._count.likes,
-          isLikedByLoggedInUser: post.likes.some(
-            (l) => l.userId === loggedInUser.id,
-          ),
-        }}
-      />
+      <hr className="text-muted-foreground" />
+      <div className="flex justify-between gap-5">
+        <LikeButton
+          postId={post.id}
+          initialState={{
+            likes: post._count.likes,
+            isLikedByLoggedInUser: post.likes.some(
+              (l) => l.userId === loggedInUser.id,
+            ),
+          }}
+        />
+        <BookmarkButton
+          postId={post.id}
+          initialState={{
+            isBookmarkedByLoggedInUser: post.bookmarks.some(
+              (b) => b.userId === loggedInUser.id,
+            ),
+          }}
+        />
+      </div>
     </article>
   );
 }

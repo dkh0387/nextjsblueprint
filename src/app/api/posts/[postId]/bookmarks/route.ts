@@ -1,9 +1,9 @@
 import {validateRequest} from "@/auth";
 import {prisma} from "@/lib/prisma";
-import {LikeInfo} from "@/lib/types";
+import {BookmarkInfo} from "@/lib/types";
 
 /**
- * Endpoint for likes of a post.
+ * Endpoint for bookmarks of a post.
  * @param req
  * @param userId
  * @constructor
@@ -18,29 +18,16 @@ export async function GET(
     if (!loggedInUser) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
-    const post = await prisma.post.findUnique({
-      where: { id: postId },
-      select: {
-        likes: {
-          where: {
-            userId: loggedInUser.id,
-          },
-          select: {
-            userId: true,
-          },
-        },
-        _count: {
-          select: { likes: true },
+    const bookmark = await prisma.bookmark.findUnique({
+      where: {
+        userId_postId: {
+          userId: loggedInUser.id,
+          postId,
         },
       },
     });
-
-    if (!post) {
-      return Response.json({ error: "Post not found" }, { status: 404 });
-    }
-    const data: LikeInfo = {
-      likes: post._count.likes,
-      isLikedByLoggedInUser: !!post.likes.length,
+    const data: BookmarkInfo = {
+      isBookmarkedByLoggedInUser: !!bookmark,
     };
     return Response.json(data);
   } catch (error) {
@@ -50,7 +37,7 @@ export async function GET(
 }
 
 /**
- * Endpoint to add a new like.
+ * Endpoint to add a new bookmark.
  * @param req
  * @param postId
  * @constructor
@@ -66,7 +53,7 @@ export async function POST(
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
     // create if not exists, otherwise ignore
-    await prisma.like.upsert({
+    await prisma.bookmark.upsert({
       where: {
         userId_postId: {
           userId: loggedInUser.id,
@@ -87,7 +74,7 @@ export async function POST(
 }
 
 /**
- * Endpoint to delete a like.
+ * Endpoint to delete a bookmark.
  * @constructor
  */
 export async function DELETE(
@@ -101,7 +88,7 @@ export async function DELETE(
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
     // delete it if exists, otherwise ignore
-    await prisma.like.deleteMany({
+    await prisma.bookmark.deleteMany({
       where: {
         userId: loggedInUser.id,
         postId: postId,

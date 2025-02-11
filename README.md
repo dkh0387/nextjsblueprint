@@ -305,10 +305,11 @@ This is the starting code for this tutorial.
 - Backend:
     - `actions.ts`: submit a new comment using prisma after user validation and return it
     - `route.ts`: GET endpoint for fetching comments from the database using prisma
-    - `Comments.tsx`: client component for showing comments
+    - `Comments.tsx`: client component for showing comments. We use ReactQuery and kyInstance to fetch data over the
+      endpoint and paginate it
     - `mutation.ts`: ReactQuery mutation for optimistic updating the cache after submitting a new comment (makes sure
       the data are available on all pages). IMPORTANT: the returned new comment from `actions.ts` is the one being used
       onSuccess callback in `mutation.ts`
     - `CommentInput.tsx`: client component for submitting a new comment. Here we call `mutation.ts` hook on submitting
       to update the cache optimistic
-    - 
+    - `Comment.tsx`: client component for a single comment for showing in `Comments.tsx`

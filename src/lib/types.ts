@@ -35,8 +35,7 @@ export type UserData = Prisma.UserGetPayload<{
  * To fetch a user together with their posts,
  * we use the `satisfies` key word.
  * Doing so, we kind of generating a type of Post data including a user (see below)
- * This one is equivalent to "postDataInclude = posts JOIN user"
- * Similary, we fetch the attachments.
+ * This one is equivalent to "postDataInclude = posts JOIN user JOIN attachments JOIN bookmarks JOIN comments"
  */
 export function getPostDataInclude(loggedInUserId: string) {
   return {
@@ -61,7 +60,10 @@ export function getPostDataInclude(loggedInUserId: string) {
       },
     },
     _count: {
-      select: { likes: true },
+      select: {
+        likes: true,
+        comments: true,
+      },
     },
   } satisfies Prisma.PostInclude;
 }
@@ -77,6 +79,22 @@ export type PostData = Prisma.PostGetPayload<{
 export interface PostsPage {
   posts: PostData[];
   nextCursor: string | null;
+}
+
+export function getCommentDataInclude(loggedInUserId: string) {
+  return {
+    user: { select: getFollowingUserDataSelect(loggedInUserId) },
+  } satisfies Prisma.CommentInclude;
+}
+
+export type CommentData = Prisma.CommentGetPayload<{
+  include: ReturnType<typeof getCommentDataInclude>;
+}>;
+
+export interface CommentsPage {
+  comments: CommentData[];
+  // we paginate comments asc
+  previousCursor: string | null;
 }
 
 export interface FollowerInfo {

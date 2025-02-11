@@ -292,3 +292,9 @@ This is the starting code for this tutorial.
 - HydrationWarning:
     - If we show data with timestamp, where there is a delay between server and client time, we get it
     - Solution: use `suppressHydrationWarning` inside the tag, see `src/components/posts/Post.tsx`
+
+# UseState
+
+- Concept of tracking changes on child components clientside
+- Example: a button has to trigger some state change depending on click
+- See: `src/components/posts/Post.tsx`

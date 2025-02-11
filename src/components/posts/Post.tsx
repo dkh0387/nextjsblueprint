@@ -12,6 +12,9 @@ import {Media} from "@prisma/client";
 import Image from "next/image";
 import LikeButton from "@/components/posts/LikeButton";
 import BookmarkButton from "@/components/posts/BookmarkButton";
+import {useState} from "react";
+import {MessageSquare} from "lucide-react";
+import Comments from "@/components/comments/Comments";
 
 /**
  * Single post canvas.
@@ -23,6 +26,8 @@ interface PostProps {
 export default function Post({ post }: PostProps) {
   // NOTE: since it is a client component, we cannot use validateRequest() here.
   const { user: loggedInUser } = useSession();
+  // We have a button to show/hide comments, so we need to track the state of it.
+  const [showComments, setShowComments] = useState(false);
 
   return (
     /*group: we group here to hover over the whole div for showing the PostMoreButton
@@ -73,15 +78,21 @@ export default function Post({ post }: PostProps) {
       )}
       <hr className="text-muted-foreground" />
       <div className="flex justify-between gap-5">
-        <LikeButton
-          postId={post.id}
-          initialState={{
-            likes: post._count.likes,
-            isLikedByLoggedInUser: post.likes.some(
-              (l) => l.userId === loggedInUser.id,
-            ),
-          }}
-        />
+        <div className="flex items-center gap-5">
+          <LikeButton
+            postId={post.id}
+            initialState={{
+              likes: post._count.likes,
+              isLikedByLoggedInUser: post.likes.some(
+                (l) => l.userId === loggedInUser.id,
+              ),
+            }}
+          />
+          <CommentButton
+            post={post}
+            onClick={() => setShowComments(!showComments)}
+          ></CommentButton>
+        </div>
         <BookmarkButton
           postId={post.id}
           initialState={{
@@ -91,6 +102,7 @@ export default function Post({ post }: PostProps) {
           }}
         />
       </div>
+      {showComments && <Comments post={post} />}
     </article>
   );
 }
@@ -142,4 +154,21 @@ function MediaPreview(props: MediaPreviewProps) {
     );
   }
   return <p className="text-destructive">Unsupported media type</p>;
+}
+
+interface CommentButtonProps {
+  post: PostData;
+  onClick: () => void;
+}
+
+function CommentButton(props: CommentButtonProps) {
+  return (
+    <button onClick={props.onClick} className="flex items-center gap-2">
+      <MessageSquare className="size-5" />
+      <span className="text-sm font-medium tabular-nums">
+        {props.post._count.comments}{" "}
+        <span className="hide sm:inline"> comments</span>
+      </span>
+    </button>
+  );
 }

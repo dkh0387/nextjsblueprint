@@ -309,4 +309,6 @@ This is the starting code for this tutorial.
     - `mutation.ts`: ReactQuery mutation for optimistic updating the cache after submitting a new comment (makes sure
       the data are available on all pages). IMPORTANT: the returned new comment from `actions.ts` is the one being used
       onSuccess callback in `mutation.ts`
+    - `CommentInput.tsx`: client component for submitting a new comment. Here we call `mutation.ts` hook on submitting
+      to update the cache optimistic
     - 

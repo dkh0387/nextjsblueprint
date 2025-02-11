@@ -1,4 +1,5 @@
 import {PostData} from "@/lib/types";
+import CommentInput from "@/components/comments/CommentInput";
 
 /**
  * Comments client component.
@@ -8,5 +9,9 @@ export interface CommentsProps {
 }
 
 export default function Comments(props: CommentsProps) {
-  return <div>Comments</div>;
+  return (
+    <div>
+      <CommentInput post={props.post} />
+    </div>
+  );
 }

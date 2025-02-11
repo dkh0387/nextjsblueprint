@@ -313,3 +313,8 @@ This is the starting code for this tutorial.
     - `CommentInput.tsx`: client component for submitting a new comment. Here we call `mutation.ts` hook on submitting
       to update the cache optimistic
     - `Comment.tsx`: client component for a single comment for showing in `Comments.tsx`
+    - `DeleteCommentDialog.tsx`: confirm dialog for deleting a comment. Here we use `mutation.ts` delete hook to
+      optimistically update the cache
+    - `CommentMoreButton.tsx`: three dot button for opening the delete-confirm dialog for deleting a comment.
+      Here we bind the comment to the dialog, so later, if we render the button on each comment, we want which one is to
+      delete

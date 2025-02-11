@@ -1,8 +1,7 @@
 import {useToast} from "@/components/ui/use-toast";
 import {CommentsPage} from "@/lib/types";
 import {InfiniteData, QueryKey, useMutation, useQueryClient,} from "@tanstack/react-query";
-import {submitComment} from "./actions";
-import {useSession} from "@/app/(main)/SessionProvider";
+import {deleteComment, submitComment} from "./actions";
 
 /**
  * ReactQuery posts mutation on submitting.
@@ -11,17 +10,8 @@ import {useSession} from "@/app/(main)/SessionProvider";
  * Toast allows showing a message in the bottom right corner (like notifications).
  */
 export function useSubmitCommentMutation(postId: string) {
-  /*  let promise = new Promise(function (resolve, reject) {
-                  setTimeout(function () {
-                    resolve("Versprochenes Ergebnis");
-                  }, 2000);
-                });*/
-
   const { toast } = useToast();
-
   const queryClient = useQueryClient();
-
-  const { user } = useSession();
 
   const mutation = useMutation({
     mutationFn: submitComment,
@@ -65,6 +55,10 @@ export function useSubmitCommentMutation(postId: string) {
         },
       });
 
+      await queryClient.invalidateQueries({
+        queryKey: ["post-feed", "for-you"],
+      });
+
       toast({
         description: "Comment created",
       });
@@ -77,6 +71,49 @@ export function useSubmitCommentMutation(postId: string) {
       });
     },
   });
+  return mutation;
+}
 
+export function useDeleteCommentMutation() {
+  const toast = useToast();
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: deleteComment,
+    onSuccess: async (deletedComment) => {
+      const queryKey: QueryKey = ["comments", deletedComment.postId];
+
+      await queryClient.cancelQueries({ queryKey });
+
+      queryClient.setQueryData<InfiniteData<CommentsPage, string | null>>(
+        queryKey,
+        (oldData) => {
+          if (!oldData) return;
+
+          return {
+            pageParams: oldData.pageParams,
+            pages: oldData.pages.map((page) => ({
+              previousCursor: page.previousCursor,
+              comments: page.comments.filter((c) => c.id !== deletedComment.id),
+            })),
+          };
+        },
+      );
+
+      await queryClient.invalidateQueries({
+        queryKey: ["post-feed", "for-you"],
+      });
+
+      toast({
+        description: "Comment deleted",
+      });
+    },
+    onError(error) {
+      console.error(error);
+      toast({
+        variant: "destructive",
+        description: "Failed to delete comment. Please try again.",
+      });
+    },
+  });
   return mutation;
 }

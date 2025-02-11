@@ -35,6 +35,7 @@ export async function GET(
       comments: comments.length > pageSize ? comments.slice(1) : comments,
       previousCursor,
     };
+    return Response.json(data);
   } catch (error) {
     console.error(error);
     return Response.json({ error: "Internal server error" }, { status: 500 });

@@ -298,3 +298,15 @@ This is the starting code for this tutorial.
 - Concept of tracking changes on child components clientside
 - Example: a button has to trigger some state change depending on click
 - See: `src/components/posts/Post.tsx`
+
+# General React concept of E2E component creation:
+
+- Usecase: we want to create a new comment on a post-component
+- Backend:
+    - `actions.ts`: submit a new comment using prisma after user validation and return it
+    - `route.ts`: GET endpoint for fetching comments from the database using prisma
+    - `Comments.tsx`: client component for showing comments
+    - `mutation.ts`: ReactQuery mutation for optimistic updating the cache after submitting a new comment (makes sure
+      the data are available on all pages). IMPORTANT: the returned new comment from `actions.ts` is the one being used
+      onSuccess callback in `mutation.ts`
+    - 

@@ -73,6 +73,7 @@ This is the starting code for this tutorial.
 - Example of fetching data: `post/editor/PostEditor.tsx`
 - Defining types of fetched objects including joined objects: `lib/types.ts`
 - Example of using native SQL: `components/TrendSideBar.tsx`
+- Example of transactions: `src/app/api/posts/[postId]/likes/route.ts`
 
 # Authentication
 

@@ -68,20 +68,30 @@ export async function POST(
     if (!loggedInUser) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
-    // create if not exists, otherwise ignore
-    await prisma.follow.upsert({
-      where: {
-        followerId_followingId: {
+    await prisma.$transaction([
+      // create if not exists, otherwise ignore
+      prisma.follow.upsert({
+        where: {
+          followerId_followingId: {
+            followerId: loggedInUser.id,
+            followingId: userId,
+          },
+        },
+        create: {
           followerId: loggedInUser.id,
           followingId: userId,
         },
-      },
-      create: {
-        followerId: loggedInUser.id,
-        followingId: userId,
-      },
-      update: {},
-    });
+        update: {},
+      }),
+      prisma.notification.create({
+        data: {
+          issuerId: loggedInUser.id,
+          recipientId: userId,
+          type: "FOLLOW",
+        },
+      }),
+    ]);
+
     return new Response();
   } catch (error) {
     console.error(error);
@@ -103,13 +113,23 @@ export async function DELETE(
     if (!loggedInUser) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
-    // delete it if exists, otherwise ignore
-    await prisma.follow.deleteMany({
-      where: {
-        followerId: loggedInUser.id,
-        followingId: userId,
-      },
-    });
+    prisma.$transaction([
+      // delete it if exists, otherwise ignore
+      prisma.follow.deleteMany({
+        where: {
+          followerId: loggedInUser.id,
+          followingId: userId,
+        },
+      }),
+      prisma.notification.deleteMany({
+        where: {
+          issuerId: loggedInUser.id,
+          recipientId: userId,
+          type: "FOLLOW",
+        },
+      }),
+    ]);
+
     return new Response();
   } catch (error) {
     console.error(error);

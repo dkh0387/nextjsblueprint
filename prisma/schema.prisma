@@ -143,7 +143,6 @@ model Notification {
   read        Boolean          @default(false)
   createdAt   DateTime         @default(now())
 
-  @@unique([recipientId, issuerId])
   @@map("notifications")
 }
 

@@ -145,7 +145,7 @@ export async function DELETE(
         where: {
           issuerId: loggedInUser.id,
           recipientId: post.userId,
-          postId,
+          postId: postId,
           type: "LIKE",
         },
       }),

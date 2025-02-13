@@ -1,12 +1,13 @@
 "use client";
 
 import {NotificationData, NotificationsPage,} from "@/lib/types";
-import {useInfiniteQuery} from "@tanstack/react-query";
+import {useInfiniteQuery, useMutation, useQueryClient,} from "@tanstack/react-query";
 import {Loader2} from "lucide-react";
 import kyInstance from "@/lib/ky";
 import InfiniteScrollContainer from "@/components/InfiniteScrollContainer";
 import PostsLoadingSkeleton from "@/components/posts/PostsLoadingSkeleton";
 import Notification from "@/app/(main)/notifications/Notification";
+import {useEffect} from "react";
 
 /**
  * Example of fetching data from an endpoint.
@@ -34,6 +35,26 @@ export default function Notifications() {
     initialPageParam: null as string | null,
     getNextPageParam: (lastPage) => lastPage.nextCursor,
   });
+
+  // optimistic update for unred notification display: set to zero in cache
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: () => kyInstance.patch("/api/notifications/mark-as-read"),
+    onSuccess: async () => {
+      queryClient.setQueryData(["unread-notification-count"], {
+        unreadCount: 0,
+      });
+    },
+    onError: async (error) => {
+      console.error("Failed to mark notifications as read", error);
+    },
+  });
+
+  // automatically call the mutation above and click the notification count button
+  // as soon as the page is loaded, all notifications are marked as read
+  useEffect(() => {
+    mutation.mutate();
+  }, []);
 
   const notifications: NotificationData[] =
     data?.pages.flatMap((notification) => notification.notifications) || [];

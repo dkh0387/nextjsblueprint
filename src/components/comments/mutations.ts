@@ -67,7 +67,7 @@ export function useSubmitCommentMutation(postId: string) {
       console.error(error);
       toast({
         variant: "destructive",
-        description: "Failed to comment. Please try again.",
+        description: error.message,
       });
     },
   });

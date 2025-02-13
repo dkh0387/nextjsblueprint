@@ -21,7 +21,7 @@ import {useDropzone} from "@uploadthing/react";
  * @constructor
  */
 export default function PostEditor() {
-  const { loggedInUser } = useSession();
+  const { user: loggedInUser } = useSession();
   const mutation = useSubmitPostMutation();
   const {
     startUpload,

@@ -25,7 +25,7 @@ interface PostProps {
 
 export default function Post({ post }: PostProps) {
   // NOTE: since it is a client component, we cannot use validateRequest() here.
-  const { loggedInUser: loggedInUser } = useSession();
+  const { user: loggedInUser } = useSession();
   // We have a button to show/hide comments, so we need to track the state of it.
   const [showComments, setShowComments] = useState(false);
 

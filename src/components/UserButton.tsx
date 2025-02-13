@@ -34,7 +34,7 @@ interface UserButtonProps {
  * @constructor
  */
 export default function UserButton({ className }: UserButtonProps) {
-  const { loggedInUser } = useSession();
+  const { user: loggedInUser } = useSession();
   const { theme, setTheme } = useTheme();
   const queryClient = useQueryClient();
 

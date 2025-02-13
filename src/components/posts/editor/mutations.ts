@@ -21,7 +21,7 @@ export function useSubmitPostMutation() {
 
   const queryClient = useQueryClient();
 
-  const { loggedInUser } = useSession();
+  const { user: loggedInUser } = useSession();
 
   const mutation = useMutation({
     mutationFn: submitPost,

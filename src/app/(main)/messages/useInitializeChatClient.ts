@@ -9,7 +9,7 @@ import kyInstance from "@/lib/ky";
  * This hook is being called just once for creating a user.
  */
 export default function useInitializeChatClient() {
-  const { loggedInUser } = useSession();
+  const { user: loggedInUser } = useSession();
   const [chatClient, setChatClient] = useState<StreamChat | null>(null);
 
   useEffect(() => {

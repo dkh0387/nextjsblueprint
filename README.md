@@ -338,3 +338,4 @@ This is the starting code for this tutorial.
 - Stream server client: `src/lib/stream.ts`
 - Getting a token: `src/app/api/get-token/route.ts`
 - Stream Chat client frontend: `src/app/(main)/messages/useInitializeChatClient.ts`
+- Styling for the Streamer messenger: see `src/app/globals.css`

@@ -132,3 +132,7 @@ export interface LikeInfo {
 export interface BookmarkInfo {
   isBookmarkedByLoggedInUser: boolean;
 }
+
+export interface NotificationCountInfo {
+  count: number;
+}

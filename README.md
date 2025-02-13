@@ -319,3 +319,10 @@ This is the starting code for this tutorial.
     - `CommentMoreButton.tsx`: three dot button for opening the delete-confirm dialog for deleting a comment.
       Here we bind the comment to the dialog, so later, if we render the button on each comment, we want which one is to
       delete
+
+# Server actions vs routing
+
+- We can either use `actions.ts` or `route.ts` for CRUD operations, etc.
+- Technically both work, but actions have some weird behavior like blocking navigation while running
+- So, it depends on usecase which one to use: for creating a post, actions might be ok, since the user has to wait. For
+  marking a notification, as read endpoint works better, because the user navigates further immediately

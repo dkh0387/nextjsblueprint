@@ -93,6 +93,8 @@ This is the starting code for this tutorial.
 - NOTE: if we render a component inside a server component, it has to be annotated with `"use client"`
 - NOTE: hooks can only be called in client components, example of a hook:
   `src/app/(main)/messages/useInitializeChatClient.ts`
+- NOTE: metadata can only be set in a server component, so if we need a client component being shown in a separate page
+  with metadata, we need to wrap it in a server page component: `src/app/(main)/messages/page.tsx`
 - Separate the app in two parts: ath part and main part, since the auth part does not need a frame
 - Wrapping the whole layout of the app: use `src/app/layout.tsx` file to set title, etc.
 - Purpose of `(...)` directories:

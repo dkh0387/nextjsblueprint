@@ -6,6 +6,7 @@ import kyInstance from "@/lib/ky";
 /**
  * Custom hook for the Stream Chat connection.
  * This one runs on the frontend, so we don't need the secret.
+ * This hook is being called just once for creating a user.
  */
 export default function useInitializeChatClient() {
   const { loggedInUser } = useSession();

@@ -12,6 +12,19 @@ export default function ChatSidebar() {
           members: { $in: [loggedInUser.id] },
         }}
         showChannelSearch
+        /*show 8 users as default and show more button for pagination*/
+        options={{ state: true, presence: true, limit: 8 }}
+        /*latest message on the top*/
+        sort={{ last_message_at: -1 }}
+        /*search not only by user but also by channels*/
+        additionalChannelSearchProps={{
+          searchForChannels: true,
+          searchQueryParams: {
+            channelFilters: {
+              filters: { members: { $in: [loggedInUser.id] } },
+            },
+          },
+        }}
       />
     </div>
   );

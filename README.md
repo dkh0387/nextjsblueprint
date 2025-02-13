@@ -74,6 +74,7 @@ This is the starting code for this tutorial.
 - Defining types of fetched objects including joined objects: `lib/types.ts`
 - Example of using native SQL: `components/TrendSideBar.tsx`
 - Example of transactions: `src/app/api/posts/[postId]/likes/route.ts`
+- Example of Interactive transaction: `src/app/(auth)/signup/actions.ts`
 
 # Authentication
 

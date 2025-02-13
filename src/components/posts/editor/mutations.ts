@@ -21,7 +21,7 @@ export function useSubmitPostMutation() {
 
   const queryClient = useQueryClient();
 
-  const { user } = useSession();
+  const { loggedInUser } = useSession();
 
   const mutation = useMutation({
     mutationFn: submitPost,
@@ -34,7 +34,7 @@ export function useSubmitPostMutation() {
           return (
             query.queryKey.includes("for-you") ||
             (query.queryKey.includes("user-posts") &&
-              query.queryKey.includes(user.id))
+              query.queryKey.includes(loggedInUser.id))
           );
         },
       } satisfies QueryFilters;

@@ -21,7 +21,7 @@ import {useDropzone} from "@uploadthing/react";
  * @constructor
  */
 export default function PostEditor() {
-  const { user } = useSession();
+  const { loggedInUser } = useSession();
   const mutation = useSubmitPostMutation();
   const {
     startUpload,
@@ -86,7 +86,7 @@ export default function PostEditor() {
       <div className="flex flex-col gap-5 rounded-2xl bg-card p-5 shadow-sm">
         <div className="flex gap-5">
           <UserAvatar
-              avatarUrl={user.avatarUrl}
+              avatarUrl={loggedInUser.avatarUrl}
               className="hidden size-12 sm:inline"
           />
           <div {...rootProps} className="w-full">

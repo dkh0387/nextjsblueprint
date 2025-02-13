@@ -34,7 +34,7 @@ interface UserButtonProps {
  * @constructor
  */
 export default function UserButton({ className }: UserButtonProps) {
-  const { user } = useSession();
+  const { loggedInUser } = useSession();
   const { theme, setTheme } = useTheme();
   const queryClient = useQueryClient();
 
@@ -42,13 +42,13 @@ export default function UserButton({ className }: UserButtonProps) {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <button className={cn("flex-none rounded-full", className)}>
-          <UserAvatar avatarUrl={user.avatarUrl} size={40} />
+          <UserAvatar avatarUrl={loggedInUser.avatarUrl} size={40} />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel>Logged in as @{user.username}</DropdownMenuLabel>
+        <DropdownMenuLabel>Logged in as @{loggedInUser.username}</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <Link href={`/users/${user.username}`}>
+        <Link href={`/users/${loggedInUser.username}`}>
           <DropdownMenuItem>
             <UserIcon className="mr-2 size-4" />
             Profile

@@ -19,7 +19,7 @@ interface UserTooltipProps extends PropsWithChildren {
 }
 
 export default function UserTooltip(props: UserTooltipProps) {
-  const { user: loggedInUser } = useSession();
+  const { loggedInUser: loggedInUser } = useSession();
   const followerState: FollowerInfo = {
     followers: props.user._count.followers,
     isFollowedByLoggedInUser: props.user.followers.some(

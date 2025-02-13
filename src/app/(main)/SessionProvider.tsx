@@ -1,7 +1,7 @@
 "use client";
 
-import { Session, User } from "lucia";
-import React, { createContext, useContext } from "react";
+import {Session, User} from "lucia";
+import React, {createContext, useContext} from "react";
 
 /**
  * Context provider for session.
@@ -9,7 +9,7 @@ import React, { createContext, useContext } from "react";
  * Here user and session cannot be null, because within the app we are logged in and those values are defined.
  */
 interface SessionContext {
-  user: User;
+  loggedInUser: User;
   session: Session;
 }
 

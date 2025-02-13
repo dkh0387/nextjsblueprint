@@ -91,6 +91,8 @@ This is the starting code for this tutorial.
 # Project structure
 
 - NOTE: if we render a component inside a server component, it has to be annotated with `"use client"`
+- NOTE: hooks can only be called in client components, example of a hook:
+  `src/app/(main)/messages/useInitializeChatClient.ts`
 - Separate the app in two parts: ath part and main part, since the auth part does not need a frame
 - Wrapping the whole layout of the app: use `src/app/layout.tsx` file to set title, etc.
 - Purpose of `(...)` directories:
@@ -327,3 +329,10 @@ This is the starting code for this tutorial.
 - Technically both work, but actions have some weird behavior like blocking navigation while running
 - So, it depends on usecase which one to use: for creating a post, actions might be ok, since the user has to wait. For
   marking a notification, as read endpoint works better, because the user navigates further immediately
+
+# Messaging
+
+- We use: https://getstream.io/
+- Stream server client: `src/lib/stream.ts`
+- Getting a token: `src/app/api/get-token/route.ts`
+- Stream Chat client frontend: `src/app/(main)/messages/useInitializeChatClient.ts`

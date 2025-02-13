@@ -64,16 +64,16 @@ export async function signUp(
       await tx.user.create({
         data: {
           id: userId,
-          username: username,
+          username,
           displayName: username,
-          email: email,
-          passwordHash: passwordHash,
+          email,
+          passwordHash,
         },
       });
-      // Create a Streamer user for messaging
+      // Create an according Streamer user for messaging
       await streamServerClient.upsertUser({
         id: userId,
-        username: username,
+        username,
         name: username,
       });
     });

@@ -3,6 +3,7 @@ import {validateRequest} from "@/auth";
 import {UploadThingError} from "@uploadthing/shared";
 import {prisma} from "@/lib/prisma";
 import {UTApi} from "uploadthing/server";
+import streamServerClient from "@/lib/stream";
 
 /**
  * Uploadthing file router.
@@ -39,12 +40,24 @@ export const fileRouter = {
         "/f/",
         `/a/${process.env.NEXT_PUBLIC_UPLOADTHING_APP_ID}/`,
       );
-      await prisma.user.update({
-        where: { id: metadata.user.id },
-        data: {
-          avatarUrl: newAvatarUrl,
-        },
-      });
+
+      // updating the avatar url for the user itself and for the according Streamer user
+      // We don't need a transaction here, since the avatar is upload even if the update fails
+      await Promise.all([
+        await prisma.user.update({
+          where: { id: metadata.user.id },
+          data: {
+            avatarUrl: newAvatarUrl,
+          },
+        }),
+        await streamServerClient.partialUpdateUser({
+          id: metadata.user.id,
+          set: {
+            image: newAvatarUrl,
+          },
+        }),
+      ]);
+
       return { avatarUrl: newAvatarUrl };
     }),
   attachment: f({

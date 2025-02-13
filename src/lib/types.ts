@@ -134,5 +134,5 @@ export interface BookmarkInfo {
 }
 
 export interface NotificationCountInfo {
-  count: number;
+  unreadCount: number;
 }

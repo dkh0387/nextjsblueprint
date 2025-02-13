@@ -248,6 +248,7 @@ This is the starting code for this tutorial.
     - Example for argument binding between mutation function and mutation call:
       `src/components/posts/DeletePostDialog.tsx`
     - Example of `OptimisticUpdate`: `src/components/FollowButton.tsx`
+- Polling/Refetching data: `src/app/(main)/NotificationsButton.tsx`
 
 # Infinite Loading
 
@@ -320,7 +321,7 @@ This is the starting code for this tutorial.
       Here we bind the comment to the dialog, so later, if we render the button on each comment, we want which one is to
       delete
 
-# Server actions vs routing
+# Server actions vs. routing
 
 - We can either use `actions.ts` or `route.ts` for CRUD operations, etc.
 - Technically both work, but actions have some weird behavior like blocking navigation while running

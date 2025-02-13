@@ -16,7 +16,7 @@ export async function GET() {
       where: { recipientId: loggedInUser.id, read: false },
     });
     const data: NotificationCountInfo = {
-      count: unreadCount,
+      unreadCount: unreadCount,
     };
     return Response.json(data);
   } catch (error) {

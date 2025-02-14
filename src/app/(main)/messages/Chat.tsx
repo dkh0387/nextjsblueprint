@@ -6,6 +6,7 @@ import {Chat as StreamChat} from "stream-chat-react";
 import ChatSidebar from "@/app/(main)/messages/ChatSidebar";
 import ChatChannel from "@/app/(main)/messages/ChatChannel";
 import {useTheme} from "next-themes";
+import {useState} from "react";
 
 /**
  * Stream Chat functionality.
@@ -18,6 +19,8 @@ export default function Chat() {
 
   const { resolvedTheme } = useTheme();
 
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   if (!chatClient) {
     return <Loader2 className="mx-auto my-3 animate-spin" />;
   }
@@ -27,14 +30,22 @@ export default function Chat() {
       <div className="absolute bottom-0 top-0 flex w-full">
         <StreamChat
           client={chatClient}
+          /*main theme applied here*/
           theme={
             resolvedTheme === "dark"
               ? "str-chat__theme-dark"
               : "str-chat__theme-light"
           }
         >
-          <ChatSidebar />
-          <ChatChannel />
+          {/*Either the chat sidebar is open or the chat channel*/}
+          <ChatSidebar
+            open={sidebarOpen}
+            onClose={() => setSidebarOpen(false)}
+          />
+          <ChatChannel
+            open={!sidebarOpen}
+            openSidebar={() => setSidebarOpen(true)}
+          />
         </StreamChat>
       </div>
     </main>

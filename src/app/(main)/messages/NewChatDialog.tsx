@@ -6,7 +6,7 @@ import {useSession} from "@/app/(main)/SessionProvider";
 import useDebounce from "@/hooks/useDebounce";
 import {UserResponse} from "stream-chat";
 import {useQuery} from "@tanstack/react-query";
-import {Check, Search, X} from "lucide-react";
+import {Check, Loader2, Search, X} from "lucide-react";
 import UserAvatar from "@/components/UserAvatar";
 
 /**
@@ -105,6 +105,17 @@ export default function NewChatDialog(props: NewChatDialogProps) {
                   }}
                 />
               ))}
+            {isSuccess && data.users.length === 0 && (
+              <p className="my-3 text-center text-muted-foreground">
+                No users found. Try a different name.
+              </p>
+            )}
+            {isFetching && <Loader2 className="mx-auto my-3 animate-spin" />}
+            {isError && (
+              <p className="my-3 text-center text-destructive">
+                An error occurred while loading users.
+              </p>
+            )}
           </div>
         </div>
       </DialogContent>

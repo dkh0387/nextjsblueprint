@@ -272,6 +272,8 @@ This is the starting code for this tutorial.
 - Example of a confirmation dialog: `src/components/posts/DeletePostDialog.tsx`
 - Example of a dialog with bindings and optimistic update: `src/app/(main)/users/[username]/EditProfileDialog.tsx`
 - Dialog for upload images: `src/components/CropImageDialog.tsx`
+- Example of conditional opened dialog: `src/app/(main)/messages/ChatSidebar.tsx`
+- Example of using ReactQuery and debounced searching inside a dialog: `src/app/(main)/messages/NewChatDialog.tsx`
 
 # Reading `.env` variables in code
 
@@ -340,3 +342,9 @@ This is the starting code for this tutorial.
 - Getting a token: `src/app/api/get-token/route.ts`
 - Stream Chat client frontend: `src/app/(main)/messages/useInitializeChatClient.ts`
 - Styling for the Streamer messenger: see `src/app/globals.css`
+
+# Debouncing
+
+- Usecase: we want to start a search after a delay if user types in
+- It Can be useful by search for offers, customers, etc.
+- Example `src/hooks/useDebounce.ts`

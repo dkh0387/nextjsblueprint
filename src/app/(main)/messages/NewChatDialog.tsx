@@ -1,13 +1,14 @@
-import {Dialog, DialogContent, DialogHeader, DialogTitle,} from "@/components/ui/dialog";
+import {Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle,} from "@/components/ui/dialog";
 import {DefaultStreamChatGenerics, useChatContext} from "stream-chat-react";
 import {useToast} from "@/components/ui/use-toast";
 import {useState} from "react";
 import {useSession} from "@/app/(main)/SessionProvider";
 import useDebounce from "@/hooks/useDebounce";
 import {UserResponse} from "stream-chat";
-import {useQuery} from "@tanstack/react-query";
+import {useMutation, useQuery} from "@tanstack/react-query";
 import {Check, Loader2, Search, X} from "lucide-react";
 import UserAvatar from "@/components/UserAvatar";
+import LoadingButton from "@/components/LoadingButton";
 
 /**
  * New Chat dialog, opens by click on MailPlus icon in header of chat sidebar.
@@ -55,6 +56,35 @@ export default function NewChatDialog(props: NewChatDialogProps) {
         // show 15 only
         { limit: 15 },
       ),
+  });
+
+  // Mutation for user selection for a group chat
+  const mutation = useMutation({
+    mutationFn: async () => {
+      const channel = client.channel("messaging", {
+        members: [loggedInUser.id, ...selectedUSers.map((user) => user.id)],
+        name:
+          selectedUSers.length > 1
+            ? loggedInUser.displayName +
+              ", " +
+              selectedUSers.map((user) => user.name).join(", ")
+            : undefined,
+      });
+      await channel.create();
+      return channel;
+    },
+    // Set selected users to a channel and close
+    onSuccess: (channel: any) => {
+      setActiveChannel(channel);
+      props.onChatCreated();
+    },
+    onError: (error: any) => {
+      console.error("Error starting chat", error);
+      toast({
+        variant: "destructive",
+        description: "Error starting chat. Please try again later.",
+      });
+    },
   });
 
   return (
@@ -118,6 +148,15 @@ export default function NewChatDialog(props: NewChatDialogProps) {
             )}
           </div>
         </div>
+        <DialogFooter className="px-6 pb-6">
+          <LoadingButton
+            loading={mutation.isPending}
+            disabled={!selectedUSers.length}
+            onClick={() => mutation.mutate()}
+          >
+            Start chat
+          </LoadingButton>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

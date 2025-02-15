@@ -373,4 +373,6 @@ This is the starting code for this tutorial.
     - We get redirected to the Google server
     - It does the authentication
     - It redirects us back to a special url ("Authorized redirect URIs") of our app and provides the data to it
-- 
+- Create a `GoogleSignInButton.tsx` and render it on the login page
+- Set up the route handler for Google OAuth server redirect: `src/app/(auth)/login/google/route.ts`
+- Set up the callback after Google sign in to bring the user back to the app after authentication

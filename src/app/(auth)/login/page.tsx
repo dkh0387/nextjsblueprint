@@ -3,6 +3,7 @@ import LoginForm from "@/app/(auth)/login/LoginForm";
 import Link from "next/link";
 import loginImage from "@/assets/login-image.jpg";
 import Image from "next/image";
+import GoogleSignInButton from "@/app/(auth)/login/GoogleSignInButton";
 
 export const metadata: Metadata = {
   title: "Login",
@@ -17,6 +18,12 @@ export default function Page() {
             Login to playground
           </h1>
           <div className="space-y-5">
+            <GoogleSignInButton />
+            <div className="flex items-center gap-3">
+              <div className="h-px flex-1 bg-muted"></div>
+              <span>OR</span>
+              <div className="h-px flex-1 bg-muted"></div>
+            </div>
             <LoginForm />
             <Link href="/signup" className="block text-center hover:underline">
               Don&apos;t have an account? Sign up

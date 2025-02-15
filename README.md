@@ -348,3 +348,29 @@ This is the starting code for this tutorial.
 - Usecase: we want to start a search after a delay if user types in
 - It Can be useful by search for offers, customers, etc.
 - Example `src/hooks/useDebounce.ts`
+
+# Google sign-in
+
+- Got to https://console.cloud.google.com/
+- Create a new project
+- Go to "API and services/Oauth consent screen" where we set up:
+    - Select "External" group
+    - DON'T upload a logo, otherwise it is being verified by Google, and it takes time
+    - You may keep "App domain" empty (even in PROD)
+    - No authorized domains
+    - Under "Data access" add two scopes:
+        - `.../auth/userinfo.email`
+        - `.../auth/userinfo.profile`
+    - Under "Audience" we can publish the app in PROD
+    - Go to "API and services/credentials" and click on "Create credentials"
+    - Select "OAuth client ID"
+    - Add multiple "Authorized redirect URIs" for DEV, PROD, etc. For DEV, it
+      is: http://localhost:3000/api/auth/callback/google
+    - Click on "Create" and credentials are being displayed
+    - Copy client id and client secret in `.env`
+    - Set up the Google client in `auth.ts` using the credentials
+- How the Google log-in works:
+    - We get redirected to the Google server
+    - It does the authentication
+    - It redirects us back to a special url ("Authorized redirect URIs") of our app and provides the data to it
+- 

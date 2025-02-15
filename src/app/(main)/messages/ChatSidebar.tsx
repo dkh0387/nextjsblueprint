@@ -3,12 +3,14 @@ import {
   ChannelList,
   ChannelPreviewMessenger,
   ChannelPreviewUIComponentProps,
+  useChatContext,
 } from "stream-chat-react";
 import { Button } from "@/components/ui/button";
 import { MailPlus, X } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import NewChatDialog from "@/app/(main)/messages/NewChatDialog";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface ChatSidebarProps {
   open: boolean;
@@ -17,6 +19,16 @@ interface ChatSidebarProps {
 
 export default function ChatSidebar({ open, onClose }: ChatSidebarProps) {
   const { user: loggedInUser } = useSession();
+  const queryClient = useQueryClient();
+  const { channel } = useChatContext();
+
+  // Invalidate the cache whenever the unread messages count changes
+  // Everytime we select on a chat channel in the chat sidebar the cache is being invalidated
+  useEffect(() => {
+    if (channel?.id) {
+      queryClient.invalidateQueries({ queryKey: ["unread-message-count"] });
+    }
+  }, [channel?.id, queryClient]);
 
   // Custom channel preview component with custom on click behavior (selecting a channel close the sidebar).
   // We put it inside the ChatSidebar, because we only need to preview it if a new chat starts.

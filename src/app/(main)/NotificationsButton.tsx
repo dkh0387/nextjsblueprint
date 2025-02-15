@@ -1,12 +1,15 @@
 "use client";
 
-import { NotificationCountInfo } from "@/lib/types";
-import { Button } from "@/components/ui/button";
+import {NotificationCountInfo} from "@/lib/types";
+import {Button} from "@/components/ui/button";
 import Link from "next/link";
-import { Bell } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
+import {Bell} from "lucide-react";
+import {useQuery} from "@tanstack/react-query";
 import kyInstance from "@/lib/ky";
 
+/**
+ * Button with unread count display for notifications.
+ */
 interface NotificationsButtonProps {
   initialState: NotificationCountInfo;
 }

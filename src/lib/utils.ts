@@ -31,3 +31,15 @@ export function formatNumber(n: number): string {
     maximumFractionDigits: 1,
   }).format(n);
 }
+
+/**
+ * Create a new username from Google user.
+ * Replaces empty spaces for dashes and removes any char
+ * which not a letter or a number or a dash.
+ */
+export function slugify(input: string): string {
+  return input
+    .toLowerCase()
+    .replace(/ /g, "-")
+    .replace(/[^a-z0-9-]/g, "");
+}

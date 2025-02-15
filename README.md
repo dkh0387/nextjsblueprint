@@ -375,4 +375,7 @@ This is the starting code for this tutorial.
     - It redirects us back to a special url ("Authorized redirect URIs") of our app and provides the data to it
 - Create a `GoogleSignInButton.tsx` and render it on the login page
 - Set up the route handler for Google OAuth server redirect: `src/app/(auth)/login/google/route.ts`
-- Set up the callback after Google sign in to bring the user back to the app after authentication
+- Set up the callback after Google sign in to bring the user back to the app after authentication and receive back the
+  state, etc.: `<BASE_URL>/api/auth/callback/google/route.ts`
+- This callback is the same we defined in the Google Cloud console under "API and services/Oauth consent screen/Clients"
+- Within the callback, we can use user information to either log-in if it exists or to sign-in if not

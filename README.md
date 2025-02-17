@@ -232,7 +232,7 @@ This is the starting code for this tutorial.
   `components/TrendSideBar.tsx`
 - Usage of ReactQuery (see below)
 
-# React Query
+# ReactQuery
 
 - See `tanstack.com`
 - Goal: Fetching and managing data from server
@@ -254,6 +254,7 @@ This is the starting code for this tutorial.
       `src/components/posts/DeletePostDialog.tsx`
     - Example of `OptimisticUpdate`: `src/components/FollowButton.tsx`
 - Polling/Refetching data: `src/app/(main)/NotificationsButton.tsx`
+- Example of immediately remove data after cached: `src/app/(main)/search/SearchResults.tsx`
 
 # Infinite Loading
 
@@ -384,7 +385,11 @@ This is the starting code for this tutorial.
 
 - Example of Postgres fulltext search
 - Fetching params from url: `src/app/api/search/route.ts`
+- Results are rendered in `src/app/(main)/search/page.tsx`
 
-- Route
-- Page
-- Infinite loading
+# Rewrites
+
+- Usecase: if we want to render a specific page under different routes (f. e. if I click on a hashtag in a post I follow
+  `/hashtag/next`, but I want to render the search page)
+- See `next.config.mjs` for configs
+- Basically: we keep the original url, but redirect to another page

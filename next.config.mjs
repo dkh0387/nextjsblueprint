@@ -17,6 +17,15 @@ const nextConfig = {
       },
     ],
   },
+  // Redirecting to another page as defined per routing
+  rewrites: () => {
+    return [
+      {
+        source: "/hashtag/:tag",
+        destination: "/search?q=%23:tag",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

@@ -75,7 +75,7 @@ export function useSubmitCommentMutation(postId: string) {
 }
 
 export function useDeleteCommentMutation() {
-  const toast = useToast();
+  const { toast } = useToast();
   const queryClient = useQueryClient();
   const mutation = useMutation({
     mutationFn: deleteComment,

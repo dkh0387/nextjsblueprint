@@ -379,3 +379,12 @@ This is the starting code for this tutorial.
   state, etc.: `<BASE_URL>/api/auth/callback/google/route.ts`
 - This callback is the same we defined in the Google Cloud console under "API and services/Oauth consent screen/Clients"
 - Within the callback, we can use user information to either log-in if it exists or to sign-in if not
+
+# Search
+
+- Example of Postgres fulltext search
+- Fetching params from url: `src/app/api/search/route.ts`
+
+- Route
+- Page
+- Infinite loading

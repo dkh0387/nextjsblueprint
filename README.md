@@ -393,3 +393,15 @@ This is the starting code for this tutorial.
   `/hashtag/next`, but I want to render the search page)
 - See `next.config.mjs` for configs
 - Basically: we keep the original url, but redirect to another page
+
+# PROD deployment
+
+- `package.json`:
+    - Generating prisma client in PROD: `"postinstall": "prisma generate"`
+- Deployment platform: https://vercel.com/
+- Connect your GitHub account
+- Import a project to deploy
+- Copy over all the `.env` variables
+- Remove base url for now (add after deployment, because vercel provides one for PROD)
+- Go to "Build and Output settings":
+    - Only by using `rc` version of Next.js: overwrite the Install Command to `npm install --legacy-peer-deps`

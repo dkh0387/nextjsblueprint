@@ -27,7 +27,7 @@ export default function BookmarkButton(props: BookmarkButtonProps) {
   const { toast } = useToast();
   const queryClient = useQueryClient();
   const queryKey: QueryKey = ["bookmark-info", props.postId];
-  const baseURL = process.env.REACT_APP_BASE_URL || "http://localhost:3000";
+  const baseURL = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
   const kyInstance = ky.create({ prefixUrl: baseURL });
 
   const { data } = useQuery({

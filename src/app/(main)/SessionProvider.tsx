@@ -9,7 +9,7 @@ import React, {createContext, useContext} from "react";
  * Here user and session cannot be null, because within the app we are logged in and those values are defined.
  */
 interface SessionContext {
-  loggedInUser: User;
+  user: User;
   session: Session;
 }
 

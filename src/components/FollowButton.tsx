@@ -34,7 +34,7 @@ export default function FollowButton(props: FollowButtonProps) {
   const queryClient = useQueryClient();
   const { data } = useFollowerInfo(props.userId, props.initialState);
   const queryKey: QueryKey = ["follower-info", props.userId];
-  const baseURL = process.env.REACT_APP_BASE_URL || 'http://localhost:3000';
+  const baseURL = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
   const kyInstance = ky.create({ prefixUrl: baseURL });
   const { mutate } = useMutation({
     mutationFn: () =>

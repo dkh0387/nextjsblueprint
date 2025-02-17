@@ -107,9 +107,3 @@ export async function GET(req: NextRequest) {
     return new Response(null, { status: 500 });
   }
 }
-
-
-// http://localhost:3000/api/auth/callback/google
-// http://localhost:3000/api/auth/callback/google
-// ?state=TBj5tR96maGy_D6EJI9SfpU8MiWrt9hvCNSNKqI0lNo&code=4%2F0ASVgi3JQOpHpLWGDCR6qAEbRzvg8liaR6srAxLTYZpmXkzKNYzS28c5kjh8FkUVq38PsFQ
-// &scope=email+profile+openid+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&authuser=3&prompt=consent

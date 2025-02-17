@@ -405,3 +405,11 @@ This is the starting code for this tutorial.
 - Remove base url for now (add after deployment, because vercel provides one for PROD)
 - Go to "Build and Output settings":
     - Only by using `rc` version of Next.js: overwrite the Install Command to `npm install --legacy-peer-deps`
+- Click "Deploy"
+- After deployment, go to "General" and in section "Node.js Version" make sure you have at least version 20.x. If not,
+  change it and redeploy (go to "Deployments")
+- Under "Project" copy the generated PROD domain and add it as env variable ("Settings/Environment variables"). Make
+  sure to set `https://` in front like https://nextjsblueprint-8pqo.vercel.app
+- Redeploy the app
+- Remember to add the PROD base URL in the Google Cloud console
+- We have to create a new app in Streamer for PROD

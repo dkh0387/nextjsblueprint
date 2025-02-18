@@ -1,10 +1,10 @@
-import { Input, InputProps } from "@/components/ui/input";
-import React, { useState } from "react";
-import { cn } from "@/lib/utils";
-import { Eye, EyeOff } from "lucide-react";
+import {Input, InputProps} from "@/components/ui/input";
+import React, {useState} from "react";
+import {cn} from "@/lib/utils";
+import {Eye, EyeOff} from "lucide-react";
 
 /**
- * OWn component for the password input field.
+ * Own component for the password input field.
  * We need to define the action for showing/hiding password
  * ...props are for using props like placeholder, etc. inside the tag like by a normal Input.
  * We do need React.forwardRef, since we need to provide the ref from SignUpForm to the Input within this component here.

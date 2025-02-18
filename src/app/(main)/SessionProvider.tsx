@@ -1,7 +1,7 @@
 "use client";
 
-import { Session, User } from "lucia";
-import React, { createContext, useContext } from "react";
+import {Session, User} from "lucia";
+import React, {createContext, useContext} from "react";
 
 /**
  * Context provider for session.
@@ -35,6 +35,7 @@ export default function SessionProvider({
  * Custom hook dealing with the fact, that the session context is initially null.
  * Advantage: we only have the null check here and return a non-nullable context.
  * So the value being provided always goes through this hook and is checked.
+ * NOTE: only for client components.
  */
 export function useSession() {
   const context = useContext(SessionContext);

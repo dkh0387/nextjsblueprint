@@ -2,6 +2,10 @@ This is the starting code for this tutorial.
 
 **IMPORTANT**: After cloning the repo, open the command line inside the project and run `npm i --legacy-peer-deps`.
 
+# Folder permissions
+
+Run `sudo chown -R 501:20 "/Users/deniskhaskin/.npm"`
+
 # Create from scratch:
 
 - Make sure you have installed Node.js >= 20, npm
@@ -12,7 +16,7 @@ This is the starting code for this tutorial.
 - Installing packages:
 
   ```
-  npm i lucia @lucia-auth/adapter-prisma prisma @prisma/client @tanstack/react-query @tanstack/react-query-devtools @tiptap/react @tiptap/starter-kit @tiptap/extension-placeholder @tiptap/pm uploadthing @uploadthing/react arctic date-fns ky next-themes react-cropper react-image-file-resizer react-intersection-observer react-linkify-it stream-chat stream-chat-react --legacy-peer-deps
+  npm i lucia @lucia-auth/adapter-prisma prisma @prisma/client @tanstack/react-query @tanstack/react-query-devtools @tiptap/react @tiptap/starter-kit @tiptap/extension-placeholder @tiptap/pm uploadthing @uploadthing/react arctic date-fns ky next-themes react-cropper react-image-file-resizer react-intersection-observer react-linkify-it stream-chat stream-chat-react @node-rs/argon2 --legacy-peer-deps
   ```
 
 - NOTE: we need `--legacy-peer-deps` at the end, because some packages are not compatible with Node.js 15 yet

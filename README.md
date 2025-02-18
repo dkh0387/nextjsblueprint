@@ -12,16 +12,16 @@ This is the starting code for this tutorial.
 - Installing packages:
 
   ```
-  npm i lucia @lucia-auth/adapter-prisma prisma @prisma/client @tanstack/react-query @tanstack/react-query-devtools @tiptap/react @tiptap/starter-kit @tiptap/extension-placeholder @tiptap/pm uploadthing @uploadthing/react arctic date-fns ky next-themes react-cropper react-image-file-resizer react-intersection-observer react-linkify-it stream-chat stream-chat-react --legacy-peer-deps
+  sudo npm i lucia @lucia-auth/adapter-prisma prisma @prisma/client @tanstack/react-query @tanstack/react-query-devtools @tiptap/react @tiptap/starter-kit @tiptap/extension-placeholder @tiptap/pm uploadthing @uploadthing/react arctic date-fns ky next-themes react-cropper react-image-file-resizer react-intersection-observer react-linkify-it stream-chat stream-chat-react --legacy-peer-deps
   ```
 
 - NOTE: we need `--legacy-peer-deps` at the end, because some packages are not compatible with Node.js 15 yet
 - All installed packages are in `package.json`
 - Dev dependencies install command:
-  `npm i -D prettier eslint-config-prettier prettier-plugin-tailwindcss --legacy-peer-deps`
-- Shadcn components:
+  `sudo npm i -D prettier eslint-config-prettier prettier-plugin-tailwindcss --legacy-peer-deps`
+- Shadcn components: ***HERE***
     - Add command:
-      `npx --legacy-peer-deps shadcn-ui@latest add button dialog dropdown-menu form input label skeleton tabs textarea toast tooltip`
+      `sudo npx --legacy-peer-deps shadcn@latest add button dialog dropdown-menu form input label skeleton tabs textarea toast tooltip`
     - Shadcn is a component library for all checkboxes, buttons, etc. with source code included, so we do not worry
       about changes in look and feel, see https://ui.shadcn.com/
     - After installation Shadcn creates `components.json` as a config file, adds CSS to `global.css` and makes changes

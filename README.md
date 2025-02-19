@@ -36,7 +36,7 @@ This is the starting code for this tutorial.
      plugins: ["prettier-plugin-tailwindcss"],
     };
     ```
-- Make ESLint work together with Prettier to edit `eslintrc.json`:
+- Make ESLint work together with Prettier to edit `eslint.config.mjs`:
 
     ```
     {
